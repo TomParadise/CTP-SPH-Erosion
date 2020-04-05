@@ -55,7 +55,6 @@ unsigned int SphSystemSolver::numberOfSubTimeSteps(double timeIntervalInSeconds)
 {
 	auto particles = sphSystemData();
 	size_t numberOfParticles = particles->numberOfParticles();
-	auto f = particles->forces();
 
 	const double kernelRadius = particles->kernelRadius();
 	const double mass = particles->mass();
@@ -64,12 +63,7 @@ unsigned int SphSystemSolver::numberOfSubTimeSteps(double timeIntervalInSeconds)
 
 	for (size_t i = 0; i < numberOfParticles; ++i) 
 	{
-		Vector3 force;
-		if (i < f.size())
-		{
-			force = f[i];
-		}
-		maxForceMagnitude = std::max(maxForceMagnitude, force.length());
+		maxForceMagnitude = std::max(maxForceMagnitude, particles->forces()[i].length());
 	}
 
 	double timeStepLimitBySpeed
@@ -138,12 +132,12 @@ void SphSystemSolver::accumulatePressureForce(const std::vector<Vector3>& positi
 			if (dist > 0.0)
 			{
 				Vector3 dir = positions[j];
-				dir = dir.vectorSubtract(positions[i]).scalarDivide(dist);
-				pressureForces[i] = pressureForces[i].vectorSubtract(
-					kernel.gradient(dist, dir).scalarMultiply(
+				dir -= vec;
+				dir /= dist;
+				pressureForces[i] -= (kernel.gradient(dist, dir) *
 						massSquared *
 						(pressures[i] / (densities[i]*densities[i]) +
-							pressures[j] / (densities[j]*densities[j]))));
+							pressures[j] / (densities[j]*densities[j])));
 			}
 		}
 	}
@@ -187,10 +181,10 @@ void SphSystemSolver::accumulateViscosityForce()
 		{
 			double dist = x[i].distanceTo(x[j]);			
 
-			Vector3 add = (v[j].vectorSubtract(v[i])).scalarDivide(d[j]);
-			add = add.scalarMultiply(_viscosityCoefficient * massSquared * kernel.secondDerivative(dist));
+			Vector3 add = (v[j]-v[i])/d[j];
+			add *= _viscosityCoefficient * massSquared * kernel.secondDerivative(dist);
 
-			sphSystemData()->forces()[i] = sphSystemData()->forces()[i].vectorAdd(add);			
+			sphSystemData()->forces()[i] += add;			
 		}
 	}
 }
@@ -220,16 +214,16 @@ void SphSystemSolver::computePseudoViscosity(double timeStepInSeconds)
 			double wj = mass / d[j] * kernel(dist);
 
 			weightSum += wj;
-			smoothedVelocity = smoothedVelocity.vectorAdd(v[j].scalarMultiply(wj));
+			smoothedVelocity += v[j] * wj;
 		}
 
 		double wi = mass / d[i];
 		weightSum += wi;
-		smoothedVelocity = smoothedVelocity.vectorAdd(v[i].scalarMultiply(wi));
+		smoothedVelocity += v[i] * wi;
 
 		if (weightSum > 0.0)
 		{
-			smoothedVelocity = smoothedVelocity.scalarDivide(weightSum);
+			smoothedVelocity /= weightSum;
 		}
 
 		smoothedVelocities.at(i) = smoothedVelocity;
@@ -241,7 +235,7 @@ void SphSystemSolver::computePseudoViscosity(double timeStepInSeconds)
 
 	for (size_t i = 0; i < numberOfParticles; i++)
 	{
-		particles->velocities()[i] = particles->velocities()[i].vectorAdd((smoothedVelocities[i].vectorSubtract(v[i]).scalarMultiply(factor)));
+		particles->velocities()[i] += (smoothedVelocities[i] - v[i]) * factor;
 	}
 	
 }

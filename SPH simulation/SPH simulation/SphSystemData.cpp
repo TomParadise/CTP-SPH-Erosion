@@ -11,6 +11,7 @@ SphSystemData::SphSystemData(size_t numberOfParticles)
 	_pressureIdx = addScalarData();
 
 	setTargetSpacing(_targetSpacing);
+	pressures().resize(numberOfParticles);
 }
 
 SphSystemData::SphSystemData(const SphSystemData & other)
@@ -124,7 +125,7 @@ Vector3 SphSystemData::interpolate(
 	{
 		double dist = origin.distanceTo(neighbourPosition);
 		double weight = m / d[i] * kernel(dist);
-		sum.vectorAdd(values[i].scalarMultiply(weight));
+		sum += values[i] * (weight);
 	});
 	return sum;
 }
@@ -165,9 +166,9 @@ Vector3 SphSystemData::gradientAt(size_t i, const std::vector<double>& values)
 		double dist = origin.distanceTo(neighbourPosition);
 		if (dist > 0.0)
 		{
-			Vector3 dir = (neighbourPosition.vectorSubtract(origin)).scalarDivide(dist);
-			sum = sum.vectorAdd(kernel.gradient(dist, dir).scalarMultiply(d[i] * mass() *
-				(values[i] / (d[i] * d[i]) + values[j] / (d[j] * d[j]))));
+			Vector3 dir = (neighbourPosition-origin) / dist;
+			sum += kernel.gradient(dist, dir) * (d[i] * mass() *
+				(values[i] / (d[i] * d[i]) + values[j] / (d[j] * d[j])));
 		}
 	}
 	return sum;

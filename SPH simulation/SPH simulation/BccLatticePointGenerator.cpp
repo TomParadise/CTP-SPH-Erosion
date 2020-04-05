@@ -10,11 +10,11 @@ void BccLatticePointGenerator::forEachPoint(const BoundingBox & boundingBox, dou
 	Vector3 pos;
 	bool hasOffset = false;
 	bool shouldQuit = false;
-	for (int k = 0; k*halfSpacing <= boxDepth && !shouldQuit; ++k)
+	for (int k = 0; k*spacing <= boxDepth && !shouldQuit; ++k)
 	{
-		pos.z = k * halfSpacing + boundingBox.lowerCorner.z;
+		pos.z = k * spacing + boundingBox.lowerCorner.z;
 
-		double offset = (hasOffset) ? halfSpacing : 0.0;
+		double offset = (hasOffset) ? spacing : 0.0;
 
 		for (int j = 0; j*spacing + offset <= boxHeight && !shouldQuit; ++j)
 		{

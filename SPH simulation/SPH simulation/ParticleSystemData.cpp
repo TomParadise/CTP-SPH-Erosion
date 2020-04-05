@@ -23,6 +23,7 @@ ParticleSystemData::~ParticleSystemData()
 void ParticleSystemData::resize(size_t newSize)
 {
 	_numberOfParticles = newSize;
+	_forces.resize(newSize);
 }
 
 size_t ParticleSystemData::numberOfParticles() const
@@ -107,10 +108,6 @@ void ParticleSystemData::addParticles(
 	size_t newNumberOfParticles = oldNumberOfParticles + newPositions.size();
 
 	resize(newNumberOfParticles);
-
-	auto pos = positions();
-	auto vel = velocities();
-	auto frc = forces();
 
 	for (size_t i = 0; i < newPositions.size(); i++)
 	{		

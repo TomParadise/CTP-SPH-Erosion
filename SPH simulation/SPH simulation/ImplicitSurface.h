@@ -28,7 +28,7 @@ protected:
 	virtual double signedDistanceLocal(Vector3& otherPoint) = 0;
 
 private:
-	double closestDistanceLocal(Vector3& otherPoint) override;
+	double closestDistanceLocal(Vector3 otherPoint) override;
 
 	bool isInsideLocal(Vector3 otherPoint) override;
 

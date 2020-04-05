@@ -36,11 +36,11 @@ public:
 	//! Returns true if bounding box can be defined.
 	bool isBounded() const;
 protected:
-		Vector3 closestPointLocal(Vector3& otherPoint) const override;
+		Vector3 closestPointLocal(Vector3 otherPoint) const override;
 
 		BoundingBox boundingBoxLocal() const;
 
-		Vector3 closestNormalLocal(Vector3& otherPoint) const override;
+		Vector3 closestNormalLocal(const Vector3& otherPoint) const override;
 };
 
 //! Shared pointer for the Plane3 type.

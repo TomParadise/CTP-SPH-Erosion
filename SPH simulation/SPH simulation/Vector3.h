@@ -21,26 +21,67 @@ public:
 		y = val2;
 		z = val3;
 	}
-	Vector3 scalarMultiply(double val)
+
+	Vector3 operator * (double a)
 	{
-		return Vector3(x*val, y*val, z*val);
+		return Vector3(x * a, y * a, z * a);
 	}
-	Vector3 scalarDivide(double val)
+	Vector3& operator *= (double a)
 	{
-		return Vector3(x/val, y/val, z/val);
+		x *= a;
+		y *= a;
+		z *= a;
+		return *this;
 	}
-	Vector3 vectorMultiply(Vector3 vec)
+
+	Vector3 operator / (double a)
 	{
-		return Vector3(x*vec.x, y*vec.y, z*vec.z);
+		return Vector3(x / a, y / a, z / a);
 	}
-	Vector3 vectorAdd(Vector3 vec)
+	Vector3& operator /= (double a)
 	{
-		return Vector3(x + vec.x, y + vec.y, z + vec.z);
+		x /= a;
+		y /= a;
+		z /= a;
+		return *this;
 	}
-	Vector3 vectorSubtract(Vector3 vec)
+
+	Vector3 operator * (const Vector3& a)
 	{
-		return Vector3(x - vec.x, y - vec.y, z - vec.z);
+		return Vector3(x * a.x, y * a.y, z * a.z);
 	}
+	Vector3& operator *= (const Vector3& a)
+	{
+		x *= a.x;
+		y *= a.y;
+		z *= a.z;
+		return *this;
+	}
+
+	Vector3 operator + (const Vector3& a)
+	{
+		return Vector3(x + a.x, y + a.y, z + a.z);
+	}
+	Vector3& operator += (const Vector3& a)
+	{
+		x += a.x;
+		y += a.y;
+		z += a.z;
+		return *this;
+	}
+
+	Vector3 operator - (const Vector3& a)
+	{
+		return Vector3(x - a.x, y - a.y, z - a.z);
+	}
+	Vector3& operator -= (const Vector3& a)
+	{
+		x -= a.x;
+		y -= a.y;
+		z -= a.z;
+		return *this;
+	}
+
 	double dot(Vector3 vec)
 	{
 		return x*vec.x + y*vec.y + z*vec.z;
@@ -55,7 +96,7 @@ public:
 	}
 	double distanceTo(Vector3 vec)
 	{
-		return this->vectorSubtract(vec).length();
+		return this->operator-(vec).length();
 	}
 	Vector3 normalized()
 	{
@@ -78,7 +119,7 @@ public:
 	}
 	double distanceSquaredTo(Vector3 vec)
 	{
-		return this->vectorSubtract(vec).lengthSquared();
+		return this->operator-(vec).lengthSquared();
 	}
 };
 #endif

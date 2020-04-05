@@ -14,7 +14,7 @@ Box::Builder Box::builder()
 	return Builder();
 }
 
-Vector3 Box::closestPointLocal(Vector3 & otherPoint) const
+Vector3 Box::closestPointLocal(Vector3 otherPoint) const
 {
 	if (bound.contains(otherPoint)) 
 	{
@@ -65,7 +65,7 @@ BoundingBox Box::boundingBoxLocal() const
 	return bound;
 }
 
-Vector3 Box::closestNormalLocal(Vector3 & otherPoint) const
+Vector3 Box::closestNormalLocal(const Vector3& otherPoint) const
 {
 	Plane planes[6] = { Plane(Vector3(1, 0, 0), bound.upperCorner),
 					   Plane(Vector3(0, 1, 0), bound.upperCorner),
@@ -73,18 +73,20 @@ Vector3 Box::closestNormalLocal(Vector3 & otherPoint) const
 					   Plane(Vector3(-1, 0, 0), bound.lowerCorner),
 					   Plane(Vector3(0, -1, 0), bound.lowerCorner),
 					   Plane(Vector3(0, 0, -1), bound.lowerCorner) };
-
-	if (bound.contains(otherPoint)) {
+	if (bound.contains(otherPoint)) 
+	{
 		Vector3 closestNormal = planes[0].normal;
 		Vector3 closestPoint = planes[0].closestPoint(otherPoint);
-		double minDistanceSquared = (closestPoint.vectorSubtract(otherPoint)).lengthSquared();
+		double minDistanceSquared = (closestPoint-otherPoint).lengthSquared();
 
-		for (int i = 1; i < 6; ++i) {
+		for (int i = 1; i < 6; ++i) 
+		{
 			Vector3 localClosestPoint = planes[i].closestPoint(otherPoint);
 			double localDistanceSquared =
-				(localClosestPoint.vectorSubtract(otherPoint)).lengthSquared();
+				(localClosestPoint-otherPoint).lengthSquared();
 
-			if (localDistanceSquared < minDistanceSquared) {
+			if (localDistanceSquared < minDistanceSquared)
+			{
 				closestNormal = planes[i].normal;
 				minDistanceSquared = localDistanceSquared;
 			}
@@ -92,7 +94,8 @@ Vector3 Box::closestNormalLocal(Vector3 & otherPoint) const
 
 		return closestNormal;
 	}
-	else {
+	else 
+	{
 		Vector3 closestPoint = Vector3(
 				std::max(otherPoint.x, bound.lowerCorner.x),
 				std::max(otherPoint.y, bound.lowerCorner.y),
@@ -101,14 +104,17 @@ Vector3 Box::closestNormalLocal(Vector3 & otherPoint) const
 			std::min(closestPoint.x, bound.upperCorner.x),
 			std::min(closestPoint.y, bound.upperCorner.y),
 			std::min(closestPoint.z, bound.upperCorner.z));
-		Vector3 closestPointToInputPoint = otherPoint.vectorSubtract(closestPoint);
+		Vector3 closestPointToInputPoint = otherPoint;
+		closestPointToInputPoint -= closestPoint;
 		Vector3 closestNormal = planes[0].normal;
 		double maxCosineAngle = closestNormal.dot(closestPointToInputPoint);
 
-		for (int i = 1; i < 6; ++i) {
+		for (int i = 1; i < 6; ++i) 
+		{
 			double cosineAngle = planes[i].normal.dot(closestPointToInputPoint);
 
-			if (cosineAngle > maxCosineAngle) {
+			if (cosineAngle > maxCosineAngle)
+			{
 				closestNormal = planes[i].normal;
 				maxCosineAngle = cosineAngle;
 			}

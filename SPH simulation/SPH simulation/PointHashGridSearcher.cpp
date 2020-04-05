@@ -61,7 +61,7 @@ void PointHashGridSearcher::forEachNearbyPoint(Vector3 & origin, double radius, 
 		for (size_t j = 0; j < numberOfPointsInBucket; ++j)
 		{
 			size_t pointIndex = bucket[j];
-			double rSquared = (_points[pointIndex].vectorSubtract(origin)).lengthSquared();
+			double rSquared = (_points[pointIndex] - origin).lengthSquared();
 			if (rSquared <= queryRadiusSquared)
 			{
 				callback(pointIndex, _points[pointIndex]);
@@ -163,7 +163,7 @@ bool PointHashGridSearcher::hasNearbyPoint(const Vector3 & origin, double radius
 		for (size_t j = 0; j < numberOfPointsInBucket; ++j) 
 		{
 			size_t pointIndex = bucket[j];
-			double rSquared = (_points[pointIndex].vectorSubtract(origin)).lengthSquared();
+			double rSquared = (_points[pointIndex] - origin).lengthSquared();
 			if (rSquared <= queryRadiusSquared) 
 			{
 				return true;

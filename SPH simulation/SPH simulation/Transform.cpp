@@ -30,9 +30,9 @@ void Transform::setTranslation(const Vector3 & translation)
 	_translation = translation;
 }
 
-Vector3 Transform::toLocal(Vector3 & pointInWorld)
+Vector3 Transform::toLocal(Vector3& pointInWorld)
 {
-	return _inverseOrientationMat3.vectorMultiply((pointInWorld.vectorSubtract(_translation)));
+	return _inverseOrientationMat3.vectorMultiply((pointInWorld - _translation));
 }
 
 const Quaternion & Transform::orientation() const
@@ -69,7 +69,7 @@ Matrix3x3 Transform::inverseOrientationMatrix() const
 
 Vector3 Transform::toWorld(Vector3 pointInLocal)
 {
-	return (_orientationMat3.vectorMultiply(pointInLocal)).vectorAdd(_translation);
+	return (_orientationMat3.vectorMultiply(pointInLocal))+(_translation);
 }
 
 BoundingBox Transform::toWorld(const BoundingBox & bboxInLocal)
@@ -90,7 +90,7 @@ BoundingBox Transform::toWorld(const BoundingBox & bboxInLocal)
 	return bboxInWorld;
 }
 
-Vector3 Transform::toWorldDirection(Vector3 & dirInLocal)
+Vector3 Transform::toWorldDirection(Vector3 dirInLocal)
 {
 	return _orientationMat3.vectorMultiply(dirInLocal);
 }

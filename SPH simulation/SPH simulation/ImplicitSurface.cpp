@@ -20,7 +20,7 @@ double ImplicitSurface::signedDistance(Vector3 & otherPoint)
 	return (isNormalFlipped) ? -sd : sd;
 }
 
-double ImplicitSurface::closestDistanceLocal(Vector3 & otherPoint)
+double ImplicitSurface::closestDistanceLocal(Vector3 otherPoint)
 {
 	return std::fabs(signedDistanceLocal(otherPoint));
 }

@@ -52,7 +52,7 @@ inline double SphStdKernel::firstDerivative(double distance) const
 }
 inline Vector3 SphStdKernel::gradient(double distance, Vector3& direction) const
 {
-	return direction.scalarMultiply(-firstDerivative(distance));
+	return direction*(-firstDerivative(distance));
 }
 
 inline double SphStdKernel::secondDerivative(double distance) const

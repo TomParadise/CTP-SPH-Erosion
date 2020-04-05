@@ -21,14 +21,15 @@ void Collider::resolveCollision(double radius, double restitutionCoefficient, Ve
 		// Target point is the closest non-penetrating position from the
 		// new position.
 		Vector3 targetNormal = colliderPoint.normal;
-		Vector3 targetPoint = colliderPoint.point.vectorAdd(targetNormal.scalarMultiply(radius));
+		Vector3 targetPoint = colliderPoint.point+(targetNormal*(radius));
 		Vector3 colliderVelAtTargetPoint = colliderPoint.velocity;
 
 		// Get new candidate relative velocity from the target point.
-		Vector3 relativeVel = velocity->vectorSubtract(colliderVelAtTargetPoint);
+		Vector3 relativeVel = *velocity;
+		relativeVel -= (colliderVelAtTargetPoint);
 		double normalDotRelativeVel = targetNormal.dot(relativeVel);
-		Vector3 relativeVelN = targetNormal.scalarMultiply(normalDotRelativeVel);
-		Vector3 relativeVelT = relativeVel.vectorSubtract(relativeVelN);
+		Vector3 relativeVelN = targetNormal*(normalDotRelativeVel);
+		Vector3 relativeVelT = relativeVel-(relativeVelN);
 
 		// Check if the velocity is facing opposite direction of the surface
 		// normal
@@ -37,8 +38,8 @@ void Collider::resolveCollision(double radius, double restitutionCoefficient, Ve
 			// Apply restitution coefficient to the surface normal component of
 			// the velocity
 			Vector3 deltaRelativeVelN =
-				relativeVelN.scalarMultiply(-restitutionCoefficient - 1.0);
-			relativeVelN = relativeVelN .scalarMultiply(-restitutionCoefficient);
+				relativeVelN*(-restitutionCoefficient - 1.0);
+			relativeVelN = relativeVelN *(-restitutionCoefficient);
 
 			// Apply friction to the tangential component of the velocity
 			if (relativeVelT.lengthSquared() > 0.0) 
@@ -47,12 +48,12 @@ void Collider::resolveCollision(double radius, double restitutionCoefficient, Ve
 					1.0 - _frictionCoeffient * deltaRelativeVelN.length() /
 					relativeVelT.length(),
 					0.0);
-				relativeVelT = relativeVelT.scalarMultiply(frictionScale);
+				relativeVelT *=(frictionScale);
 			}
 
 			// Reassemble the components
 			*velocity =
-				relativeVelN.vectorAdd(relativeVelT.vectorAdd(colliderVelAtTargetPoint));
+				relativeVelN+(relativeVelT+(colliderVelAtTargetPoint));
 		}
 
 		// Geometric fix
@@ -102,7 +103,7 @@ bool Collider::isPenetrating(const ColliderQueryResult & colliderPoint, Vector3 
 	return _surface->isInside(pos) || colliderPoint.distance < radius;
 }
 
-void Collider::getClosestPoint(SurfacePtr & surface, Vector3 & queryPoint, ColliderQueryResult * result)
+void Collider::getClosestPoint(SurfacePtr& surface, Vector3& queryPoint, ColliderQueryResult* result)
 {
 	result->distance = surface->closestDistance(queryPoint);
 	result->point = surface->closestPoint(queryPoint);

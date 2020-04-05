@@ -49,7 +49,7 @@ public:
 	BoundingBox toWorld(const BoundingBox& bboxInLocal);
 
 	//! Transforms a direction in local space to the world coordinate.
-	Vector3 toWorldDirection(Vector3& dirInLocal);
+	Vector3 toWorldDirection(Vector3 dirInLocal);
 private:
 	Vector3 _translation;
 	Quaternion _orientation;

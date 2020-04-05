@@ -32,15 +32,15 @@ public:
 	SurfacePtr surface() const;
 
 protected:
-	double closestDistanceLocal(Vector3& otherPoint) override;
+	double closestDistanceLocal(Vector3 otherPoint) override;
 
 	BoundingBox boundingBoxLocal() const override;
 
 	double signedDistanceLocal(Vector3& otherPoint)override;
 
-	Vector3 closestPointLocal(Vector3& otherPoint) const override;
+	Vector3 closestPointLocal(Vector3 otherPoint) const override;
 
-	Vector3 closestNormalLocal(Vector3& otherPoint) const override;
+	Vector3 closestNormalLocal(const Vector3& otherPoint) const override;
 
 	bool isInsideLocal(Vector3 otherPoint) override;
 private:

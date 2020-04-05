@@ -39,25 +39,14 @@ void ParticleSystemSolver::accumulateForces(double timeStepInSeconds)
 void ParticleSystemSolver::accumulateExternalForces()
 {
 	size_t n = _particleSystemData->numberOfParticles();
-	auto velocities = _particleSystemData->velocities();
-	auto positions = _particleSystemData->positions();
 	const double mass = _particleSystemData->mass();
 
 	for (size_t i = 0; i < n; i++)
 	{
 		//gravity
-		Vector3 force = _gravity.scalarMultiply(mass);
-
-		force = force.vectorAdd(_particleSystemData->velocities()[i].scalarMultiply(-_dragCoefficient));
-
-		if (i >= _particleSystemData->forces().size())
-		{
-			_particleSystemData->forces().push_back(force);
-		}
-		else
-		{
-			_particleSystemData->forces()[i] = _particleSystemData->forces()[i].vectorAdd(force);
-		}
+			_particleSystemData->forces()[i] += (_gravity * mass) +
+						(_particleSystemData->velocities()[i] *
+							-_dragCoefficient);
 	}
 }
 
@@ -136,20 +125,14 @@ void ParticleSystemSolver::onInitialise()
 void ParticleSystemSolver::timeIntegration(double timeIntervalInSeconds)
 {
 	size_t n = _particleSystemData->numberOfParticles();
-	auto forces = _particleSystemData->forces();
 	const double mass = _particleSystemData->mass();
 
 	for (size_t i = 0; i < n; i++)
 	{
-		Vector3 force = Vector3();
-		if (i < forces.size())
-		{
-			force = forces[i];
-		}
 
-		_newVelocities[i] = _particleSystemData->velocities()[i].vectorAdd(((force.scalarDivide(mass)).scalarMultiply(timeIntervalInSeconds)));
+		_newVelocities[i] = _particleSystemData->velocities()[i]+(((_particleSystemData->forces()[i]/(mass))*(timeIntervalInSeconds)));
 
-		_newPositions[i] = _particleSystemData->positions()[i].vectorAdd((_newVelocities[i].scalarMultiply(timeIntervalInSeconds)));
+		_newPositions[i] = _particleSystemData->positions()[i]+((_newVelocities[i]*(timeIntervalInSeconds)));
 	}
 }
 

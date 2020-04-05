@@ -14,8 +14,8 @@ RigidBodyCollider::RigidBodyCollider(SurfacePtr & surface, const Vector3 & linea
 
 Vector3 RigidBodyCollider::velocityAt(Vector3 & point)
 {
-	Vector3 r = point.vectorSubtract(surface()->transform.translation());
-	return linearVelocity.vectorAdd(angularVelocity.cross(r));
+	Vector3 r = point - surface()->transform.translation();
+	return linearVelocity + angularVelocity.cross(r);
 }
 
 RigidBodyCollider::Builder RigidBodyCollider::builder()

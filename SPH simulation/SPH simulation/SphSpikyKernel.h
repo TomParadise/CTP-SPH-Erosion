@@ -56,7 +56,7 @@ inline double SphSpikyKernel::firstDerivative(double distance) const
 
 inline Vector3 SphSpikyKernel::gradient(double distance, Vector3 & direction) const
 {
-	return direction.scalarMultiply(-firstDerivative(distance));
+	return direction*(-firstDerivative(distance));
 }
 
 inline double SphSpikyKernel::secondDerivative(double distance) const

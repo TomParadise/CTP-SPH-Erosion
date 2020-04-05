@@ -10,30 +10,25 @@ Surface::Surface(const Surface& other)
 
 Surface::~Surface() {}
 
-bool Surface::isInside(Vector3& otherPoint) 
+bool Surface::isInside(Vector3 otherPoint) 
 {
 	return isNormalFlipped == !isInsideLocal(transform.toLocal(otherPoint));
 }
 
-double Surface::closestDistance(Vector3 & otherPoint)
+double Surface::closestDistance(Vector3 otherPoint)
 {
-	Vector3 point = transform.toLocal(otherPoint);
-	return closestDistanceLocal(point);
+	return closestDistanceLocal(transform.toLocal(otherPoint));
 }
 
-Vector3 Surface::closestPoint(Vector3 & otherPoint)
+Vector3 Surface::closestPoint(Vector3 otherPoint)
 {
-	Vector3 point = transform.toLocal(otherPoint);
-	Vector3 closestPoint = closestPointLocal(point);
-	return transform.toWorld(closestPoint);
+	return transform.toWorld(closestPointLocal(transform.toLocal(otherPoint)));
 }
 
-Vector3 Surface::closestNormal(Vector3 & otherPoint)
+Vector3 Surface::closestNormal(Vector3 otherPoint)
 {
-	Vector3 point = transform.toLocal(otherPoint);
-	Vector3 closestNormal = closestNormalLocal(point);
-	auto result = transform.toWorldDirection(closestNormal);
-	result = result.scalarMultiply((isNormalFlipped) ? -1.0 : 1.0);
+	auto result = transform.toWorldDirection(closestNormalLocal(transform.toLocal(otherPoint)));
+	result *= (isNormalFlipped) ? -1.0 : 1.0;
 	return result;
 }
 
@@ -42,7 +37,7 @@ BoundingBox Surface::boundingBox()
 	return transform.toWorld(boundingBoxLocal());
 }
 
-double Surface::closestDistanceLocal(Vector3 & otherPoint)
+double Surface::closestDistanceLocal(Vector3 otherPoint)
 {
 	return otherPoint.distanceTo(closestPointLocal(otherPoint));
 }
@@ -51,5 +46,5 @@ bool Surface::isInsideLocal(Vector3 otherPointLocal)
 {
 	Vector3 cpLocal = closestPointLocal(otherPointLocal);
 	Vector3 normalLocal = closestNormalLocal(otherPointLocal);
-	return (otherPointLocal.vectorSubtract(cpLocal)).dot(normalLocal) < 0.0;
+	return (otherPointLocal-cpLocal).dot(normalLocal) < 0.0;
 }

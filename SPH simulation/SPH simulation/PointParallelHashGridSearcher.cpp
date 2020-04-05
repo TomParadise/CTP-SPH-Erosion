@@ -132,13 +132,13 @@ void PointParallelHashGridSearcher::forEachNearbyPoint(Vector3 & origin, double 
 		}
 
 		for (size_t j = start; j < end; ++j) {
-			Vector3 direction = _points[j].vectorSubtract(origin);
+			Vector3 direction = _points[j] - origin;
 			double distanceSquared = direction.lengthSquared();
 			if (distanceSquared <= queryRadiusSquared) {
 				double distance = 0.0;
 				if (distanceSquared > 0) {
 					distance = std::sqrt(distanceSquared);
-					direction = direction.scalarDivide(distance);
+					direction /= distance;
 				}
 
 				callback(_sortedIndices[j], _points[j]);
@@ -165,7 +165,7 @@ bool PointParallelHashGridSearcher::hasNearbyPoint(const Vector3 & origin, doubl
 		}
 
 		for (size_t j = start; j < end; ++j) {
-			Vector3 direction = _points[j].vectorSubtract(origin);
+			Vector3 direction = _points[j] - origin;
 			double distanceSquared = direction.lengthSquared();
 			if (distanceSquared <= queryRadiusSquared) {
 				return true;

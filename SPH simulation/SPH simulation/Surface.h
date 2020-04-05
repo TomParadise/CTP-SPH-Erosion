@@ -37,19 +37,19 @@ public:
 
 	//! Returns true if \p otherPoint is inside the volume defined by the
 	//! surface.
-	bool isInside(Vector3& otherPoint);
+	bool isInside(Vector3 otherPoint);
 	   
 	//! Returns the closest distance from the given point \p otherPoint to the
 	//! point on the surface.
-	double closestDistance(Vector3& otherPoint);
+	double closestDistance(Vector3 otherPoint);
 
 	//! Returns the closest point from the given point \p otherPoint to the
 	//! surface.
-	Vector3 closestPoint(Vector3& otherPoint);
+	Vector3 closestPoint(Vector3 otherPoint);
 
 	//! Returns the normal to the closest point on the surface from the given
 	//! point \p otherPoint.
-	Vector3 closestNormal(Vector3& otherPoint);
+	Vector3 closestNormal(Vector3 otherPoint);
 
 	//! Returns the bounding box of this surface object.
 	BoundingBox boundingBox();
@@ -57,15 +57,15 @@ public:
 protected:
 	//! Returns the closest point from the given point \p otherPoint to the
 	//! surface in local frame.
-	virtual Vector3 closestPointLocal(Vector3& otherPoint) const = 0;
+	virtual Vector3 closestPointLocal(Vector3 otherPoint) const = 0;
 
 	//! Returns the normal to the closest point on the surface from the given
 	//! point \p otherPoint in local frame.
-	virtual Vector3 closestNormalLocal(Vector3& otherPoint) const = 0;
+	virtual Vector3 closestNormalLocal(const Vector3& otherPoint) const = 0;
 
 	//! Returns the closest distance from the given point \p otherPoint to the
 	//! point on the surface in local frame.
-	virtual double closestDistanceLocal(Vector3& otherPoint);
+	virtual double closestDistanceLocal(Vector3 otherPoint);
 
 	//! Returns true if \p otherPoint is inside by given \p depth the volume
 	//! defined by the surface in local frame.

@@ -15,7 +15,7 @@ SurfacePtr SurfaceToImplicit::surface() const
 	return _surface;
 }
 
-double SurfaceToImplicit::closestDistanceLocal(Vector3 & otherPoint)
+double SurfaceToImplicit::closestDistanceLocal(Vector3 otherPoint)
 {
 	return _surface->closestDistance(otherPoint);
 }
@@ -32,12 +32,12 @@ double SurfaceToImplicit::signedDistanceLocal(Vector3 & otherPoint)
 	return (inside) ? -x.distanceTo(otherPoint) : x.distanceTo(otherPoint);
 }
 
-Vector3 SurfaceToImplicit::closestPointLocal(Vector3 & otherPoint) const
+Vector3 SurfaceToImplicit::closestPointLocal(Vector3 otherPoint) const
 {
 	return _surface->closestPoint(otherPoint);
 }
 
-Vector3 SurfaceToImplicit::closestNormalLocal(Vector3 & otherPoint) const
+Vector3 SurfaceToImplicit::closestNormalLocal(const Vector3& otherPoint) const
 {
 	return _surface->closestNormal(otherPoint);
 }

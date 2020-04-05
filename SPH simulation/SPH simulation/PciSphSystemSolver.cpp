@@ -10,7 +10,6 @@ PciSphSystemSolver::PciSphSystemSolver()
 PciSphSystemSolver::PciSphSystemSolver(double targetDensity, double targetSpacing, double relativeKernelRadius)
 	: SphSystemSolver(targetDensity, targetSpacing, relativeKernelRadius)
 {
-
 }
 
 PciSphSystemSolver::~PciSphSystemSolver()
@@ -50,13 +49,8 @@ void PciSphSystemSolver::accumulatePressureForce(double timeIntervalInSeconds)
 		//predict vel and pos
 		for (size_t i = 0; i < numberOfParticles; i++)
 		{
-			Vector3 force = Vector3();
-			if (i < particles->forces().size())
-			{
-				force = particles->forces()[i];
-			}
-			_tempVelocities[i] = particles->velocities()[i].vectorAdd((force.vectorAdd(_pressureForces[i])).scalarMultiply(timeIntervalInSeconds / mass));
-			_tempPositions[i] = particles->positions()[i].vectorAdd(_tempVelocities[i].scalarMultiply(timeIntervalInSeconds));
+			_tempVelocities[i] = particles->velocities()[i]+((particles->forces()[i]+(_pressureForces[i]))*(timeIntervalInSeconds / mass));
+			_tempPositions[i] = particles->positions()[i]+(_tempVelocities[i]*(timeIntervalInSeconds));
 		}
 		//resolve collisions
 		resolveCollision(
@@ -118,7 +112,7 @@ void PciSphSystemSolver::accumulatePressureForce(double timeIntervalInSeconds)
 		//accumulate pressure force
 		for (size_t i = 0; i < numberOfParticles; i++)
 		{
-			sphSystemData()->forces()[i] = sphSystemData()->forces()[i].vectorAdd(_pressureForces[i]);
+			sphSystemData()->forces()[i] += _pressureForces[i];
 		}
 	
 }
@@ -167,11 +161,11 @@ double PciSphSystemSolver::computeDelta(double timeStepInSeconds)
 		{
 			double distance = std::sqrt(distanceSquared);
 			Vector3 direction =
-				(distance > 0.0) ? (point.scalarDivide(distance)) : Vector3();
+				(distance > 0.0) ? (point/(distance)) : Vector3();
 
 			// grad(Wij)
 			Vector3 gradWij = kernel.gradient(distance, direction);
-			denom1 = denom1.vectorAdd(gradWij);
+			denom1 = denom1+(gradWij);
 			denom2 += gradWij.dot(gradWij);
 		}
 	}

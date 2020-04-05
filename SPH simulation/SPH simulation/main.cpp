@@ -57,7 +57,7 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 
 		char basename[256];
 		snprintf(basename, sizeof(basename), "frame_%06d.pos", frame.index);
-		std::string filename = "E:/YEAR 3 Uni work/SPH Erosion Simulation/Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
+		std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
 		std::ofstream file;
 		file.open(filename);
 		if (file) 
@@ -77,7 +77,7 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 void damBreakSim(double targetSpacing,
 	int numberOfFrames, double fps)
 {
-	BoundingBox domain(Vector3(0,0,0), Vector3(0.10, 0.5, 1.5));
+	BoundingBox domain(Vector3(0,0,0), Vector3(0.25, 0.5, 0.3));
 	double lz = domain.depth();
 
 	// Build solver
@@ -96,7 +96,7 @@ void damBreakSim(double targetSpacing,
 	auto box1 =
 		Box::builder()
 		.withLowerCorner({ 0, 0, 0 })
-		.withUpperCorner({ 0.10 + 0.001, 0.25 + 0.001, 0.25 * lz + 0.001 })
+		.withUpperCorner({ 0.15 + 0.001, 0.25 + 0.001, 0.5 * lz + 0.001 })
 		.makeShared();
 
 	//auto box2 =

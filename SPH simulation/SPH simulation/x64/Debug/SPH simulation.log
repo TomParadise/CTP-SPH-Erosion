@@ -1,10 +1,121 @@
-﻿  main.cpp
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-e:\year 3 uni work\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SPH simulation.vcxproj -> E:\YEAR 3 Uni work\SPH simulation\x64\Debug\SPH simulation.exe
+﻿  Box.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Collider.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ImplicitSurface.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  ParticleSystemSolver.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PciSphSystemSolver.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Plane.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  RigidBodyCollider.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  SphSystemSolver.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Surface.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  SurfaceToImplicit.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Transform.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  VolumeParticleEmitter.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\volumeparticleemitter.cpp(199): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\volumeparticleemitter.cpp(232): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(83): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  SPH simulation.vcxproj -> E:\YEAR 3 Uni work\CTP-SPH-Erosion\SPH simulation\x64\Debug\SPH simulation.exe

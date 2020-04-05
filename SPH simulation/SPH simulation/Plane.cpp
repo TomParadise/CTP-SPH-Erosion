@@ -10,7 +10,7 @@ Plane::Plane(const Vector3 & point0, Vector3 & point1, Vector3 & point2, const T
 : Surface(transform,isNormalFlipped) 
 {
 	point = point0;
-	normal = point1.vectorSubtract(point).cross(point2.vectorSubtract(point)).normalized();
+	normal = (point1-point).cross(point2-point).normalized();
 }
 
 bool Plane::isBounded() const
@@ -18,11 +18,11 @@ bool Plane::isBounded() const
 	return false;
 }
 
-Vector3 Plane::closestPointLocal(Vector3 & otherPoint) const
+Vector3 Plane::closestPointLocal(Vector3 otherPoint) const
 {
 	Vector3 _normal = normal;
-	Vector3 r = otherPoint.vectorSubtract(point);
-	return r.vectorSubtract(_normal.scalarMultiply(_normal.dot(r))).vectorAdd(point);
+	Vector3 r = otherPoint-point;
+	return r - (_normal * _normal.dot(r))  + point;
 }
 
 BoundingBox Plane::boundingBoxLocal() const
@@ -35,18 +35,18 @@ BoundingBox Plane::boundingBoxLocal() const
 
 	if (std::fabs(_normal.dot(Vector3(1, 0, 0)) - 1.0) < eps) 
 	{
-		return BoundingBox(_point.vectorSubtract( Vector3(0, dmax, dmax)),
-			_point.vectorAdd(Vector3(0, dmax, dmax)));
+		return BoundingBox(_point - Vector3(0, dmax, dmax),
+			_point + Vector3(0, dmax, dmax));
 	}
 	else if (std::fabs(_normal.dot(Vector3(0, 1, 0)) - 1.0) < eps) 
 	{
-		return BoundingBox(_point.vectorSubtract(Vector3(dmax, 0, dmax)),
-			_point.vectorAdd(Vector3(dmax, 0, dmax)));
+		return BoundingBox(_point - Vector3(dmax, 0, dmax),
+			_point + Vector3(dmax, 0, dmax));
 	}
 	else if (std::fabs(_normal.dot(Vector3(0, 0, 1)) - 1.0) < eps) 
 	{
-		return BoundingBox(_point.vectorSubtract(Vector3(dmax, dmax, 0)),
-			_point.vectorAdd(Vector3(dmax, dmax, 0)));
+		return BoundingBox(_point - Vector3(dmax, dmax, 0),
+			_point + Vector3(dmax, dmax, 0));
 	}
 	else 
 	{
@@ -55,7 +55,7 @@ BoundingBox Plane::boundingBoxLocal() const
 	}
 }
 
-Vector3 Plane::closestNormalLocal(Vector3 & otherPoint) const
+Vector3 Plane::closestNormalLocal(const Vector3 &otherPoint) const
 {
 	return normal;
 }

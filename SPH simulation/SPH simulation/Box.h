@@ -37,11 +37,11 @@ public:
 protected:
 	// Surface3 implementations
 
-	Vector3 closestPointLocal(Vector3& otherPoint) const override;
+	Vector3 closestPointLocal(Vector3 otherPoint) const override;
 
 	BoundingBox boundingBoxLocal() const;
 
-	Vector3 closestNormalLocal(Vector3& otherPoint) const override;
+	Vector3 closestNormalLocal(const Vector3& otherPoint) const override;
 };
 
 //! Shared pointer type for the Box3.

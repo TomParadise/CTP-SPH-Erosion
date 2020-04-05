@@ -197,9 +197,9 @@ void VolumeParticleEmitter::emit(const ParticleSystemDataPtr & particles, std::v
 		_pointsGen->forEachPoint(region, _spacing, [&](const Vector3& point) 
 		{
 			Vector3 randomDir = uniformSampleSphere(random(), random());
-			Vector3 offset = randomDir.scalarMultiply(maxJitterDist);
+			Vector3 offset = randomDir*maxJitterDist;
 			Vector3 candidate = point;
-			candidate = candidate.vectorAdd(offset);
+			candidate = candidate + offset;
 			if (_implicitSurface->signedDistance(candidate) <= 0.0) 
 			{
 				if (_numberOfEmittedParticles < _maxNumberOfParticles) 
@@ -230,9 +230,9 @@ void VolumeParticleEmitter::emit(const ParticleSystemDataPtr & particles, std::v
 		_pointsGen->forEachPoint(region, _spacing, [&](const Vector3& point) 
 		{
 			Vector3 randomDir = uniformSampleSphere(random(), random());
-			Vector3 offset = randomDir.scalarMultiply(maxJitterDist);
+			Vector3 offset = randomDir*maxJitterDist;
 			Vector3 candidate = point;
-			candidate.vectorAdd(offset);
+			candidate += offset;
 			if (_implicitSurface->isInside(candidate) &&
 				(!_allowOverlapping &&
 					!neighborSearcher.hasNearbyPoint(candidate, _spacing))) 
@@ -283,8 +283,8 @@ Vector3 VolumeParticleEmitter::uniformSampleSphere(float u1, float u2)
 
 Vector3 VolumeParticleEmitter::velocityAt(Vector3 & point)
 {
-	Vector3 r = point.vectorSubtract(_implicitSurface->transform.translation());
-	return _linearVel.vectorAdd(_angularVel.cross(r)).vectorAdd(_initialVel);
+	Vector3 r = point-_implicitSurface->transform.translation();
+	return _linearVel + _angularVel.cross(r) + _initialVel;
 }
 
 VolumeParticleEmitter::Builder & VolumeParticleEmitter::Builder::withImplicitSurface(const ImplicitSurfacePtr & implicitSurface)

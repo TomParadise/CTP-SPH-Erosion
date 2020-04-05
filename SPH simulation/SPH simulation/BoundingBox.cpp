@@ -54,8 +54,8 @@ bool BoundingBox::contains(const Vector3 & point) const
 
 void BoundingBox::expand(double delta)
 {
-	lowerCorner = lowerCorner.vectorSubtract(Vector3(delta,delta,delta));
-	upperCorner = upperCorner.vectorAdd(Vector3(delta, delta, delta));
+	lowerCorner -= Vector3(delta,delta,delta);
+	upperCorner += Vector3(delta, delta, delta);
 }
 
 Vector3 BoundingBox::corner(size_t idx) const
@@ -65,11 +65,11 @@ Vector3 BoundingBox::corner(size_t idx) const
 		{-h, -h, -h}, {+h, -h, -h}, {-h, +h, -h}, {+h, +h, -h},
 		{-h, -h, +h}, {+h, -h, +h}, {-h, +h, +h}, {+h, +h, +h} };
 
-	return Vector3(width(), height(), depth()).vectorMultiply(offset[idx]).vectorAdd(midPoint());
+	return Vector3(width(), height(), depth())*offset[idx] + midPoint();
 }
 
 Vector3 BoundingBox::midPoint() const
 {
 	Vector3 midPoint = upperCorner;
-	return (midPoint.vectorAdd(lowerCorner)).scalarDivide(2);
+	return (midPoint+lowerCorner)/2;
 }

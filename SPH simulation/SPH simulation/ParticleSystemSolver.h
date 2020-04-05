@@ -67,8 +67,8 @@ private:
 	double _restitutionCoefficient = 0.0;
 	Vector3 _gravity = Vector3(0.0,-9.8,0.0);
 
-	std::vector<Vector3> _newPositions;
-	std::vector<Vector3> _newVelocities;
+	ParticleSystemData::vectorArray _newPositions;
+	ParticleSystemData::vectorArray _newVelocities;
 	ColliderPtr _collider;
 	ParticleEmitterPtr _emitter;
 };

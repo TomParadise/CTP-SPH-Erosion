@@ -124,7 +124,8 @@ public:
 	Quaternion inverse() const
 	{
 		float denom = w * w + x * x + y * y + z * z;
-		return *new Quaternion(w / denom, -x / denom, -y / denom, -z / denom);
+		Quaternion quat(w / denom, -x / denom, -y / denom, -z / denom);
+		return quat;
 	}
 
 	//! Converts to the 3x3 rotation matrix.
