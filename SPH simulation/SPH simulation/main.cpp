@@ -77,7 +77,7 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 void damBreakSim(double targetSpacing,
 	int numberOfFrames, double fps)
 {
-	BoundingBox domain(Vector3(0,0,0), Vector3(0.25, 0.5, 0.3));
+	BoundingBox domain(Vector3(0,0,0), Vector3(1.5, 2, 1.5));
 	double lz = domain.depth();
 
 	// Build solver
@@ -96,7 +96,7 @@ void damBreakSim(double targetSpacing,
 	auto box1 =
 		Box::builder()
 		.withLowerCorner({ 0, 0, 0 })
-		.withUpperCorner({ 0.15 + 0.001, 0.25 + 0.001, 0.5 * lz + 0.001 })
+		.withUpperCorner({ 0.5 + 0.001, 0.45 + 0.001, 0.75 * lz + 0.001 })
 		.makeShared();
 
 	//auto box2 =
@@ -109,7 +109,7 @@ void damBreakSim(double targetSpacing,
 		.withSurface(box1)
 		.withMaxRegion(sourceBound)
 		.withSpacing(targetSpacing)
-		.withMaxNumberOfParticles(400)
+		.withMaxNumberOfParticles(10000)
 		.makeShared();
 
 	solver->setEmitter(emitter);
@@ -133,10 +133,5 @@ void damBreakSim(double targetSpacing,
 
 int main()
 {
-	int in;
-	std::cin >> in;
-	if (in == 1)
-	{
-		damBreakSim(0.02,100,60);
-	}	
+	damBreakSim(0.02, 300, 60);
 }
