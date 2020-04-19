@@ -48,3 +48,8 @@ bool Surface::isInsideLocal(Vector3 otherPointLocal)
 	Vector3 normalLocal = closestNormalLocal(otherPointLocal);
 	return (otherPointLocal-cpLocal).dot(normalLocal) < 0.0;
 }
+
+void Surface::updateQueryEngine()
+{
+	// Do nothing, this is only for tri-meshes
+}

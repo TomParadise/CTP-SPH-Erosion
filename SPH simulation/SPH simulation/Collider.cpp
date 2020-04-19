@@ -17,7 +17,8 @@ void Collider::resolveCollision(double radius, double restitutionCoefficient, Ve
 	getClosestPoint(_surface, *position, &colliderPoint);
 
 	// Check if the new position is penetrating the surface
-	if (isPenetrating(colliderPoint, *position, radius)) {
+	if (isPenetrating(colliderPoint, *position, radius)) 
+	{
 		// Target point is the closest non-penetrating position from the
 		// new position.
 		Vector3 targetNormal = colliderPoint.normal;
@@ -78,6 +79,8 @@ void Collider::update(double currentTimeInSeconds, double timeIntervalInSeconds)
 	{
 		_onUpdateCallback(this, currentTimeInSeconds, timeIntervalInSeconds);
 	}
+
+	_surface->updateQueryEngine();
 }
 
 void Collider::setOnBeginUpdateCallback(const OnBeginUpdateCallback & callback)

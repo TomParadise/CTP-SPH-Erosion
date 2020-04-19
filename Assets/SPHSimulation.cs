@@ -31,7 +31,7 @@ public class SPHSimulation : MonoBehaviour
         if (frame < frameCount)
         {
             timer += Time.deltaTime;
-            if (timer >= 0.025f)
+            if (timer >= 0.040f)
             {
                 File = new StreamReader("Assets/Positions/DamBreak" + frame.ToString() + ".txt");
                 text = File.ReadToEnd();

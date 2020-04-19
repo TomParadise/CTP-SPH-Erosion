@@ -143,5 +143,15 @@ public:
 			(vec.x * m10 + vec.y * m11 + vec.z * m12),
 			(vec.x * m20 + vec.y * m21 + vec.z * m22));
 	}
+
+	float determinant() const
+	{
+		return m00 * m11 * m22 -
+			m00 * m12 * m21 +
+			m01 * m12 * m20 -
+			m01 * m10 * m22 +
+			m02 * m10 * m21 -
+			m02 * m11 * m20;
+	}
 };
 #endif

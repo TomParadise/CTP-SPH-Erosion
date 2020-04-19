@@ -155,8 +155,10 @@
     <ClInclude Include="BccLatticePointGenerator.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Bvh.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="Heightfield.h" />
     <ClInclude Include="ImplicitSurface.h" />
     <ClInclude Include="Matrix3x3.h" />
     <ClInclude Include="ParticleEmitter.h" />
@@ -179,6 +181,8 @@
     <ClInclude Include="SurfaceToImplicit.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Triangle.h" />
+    <ClInclude Include="TriangleMesh.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VolumeParticleEmitter.h" />
   </ItemGroup>
@@ -186,7 +190,9 @@
     <ClCompile Include="BccLatticePointGenerator.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Bvh.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Heightfield.cpp" />
     <ClCompile Include="ImplicitSurface.cpp" />
     <ClCompile Include="ParticleEmitter.cpp" />
     <ClCompile Include="ParticleSystemData.cpp" />
@@ -206,6 +212,8 @@
     <ClCompile Include="SurfaceToImplicit.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="TriangleMesh.cpp" />
     <ClCompile Include="VolumeParticleEmitter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

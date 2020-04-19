@@ -22,7 +22,7 @@ public:
 		z = val3;
 	}
 
-	Vector3 operator * (double a)
+	Vector3 operator * (double a) const
 	{
 		return Vector3(x * a, y * a, z * a);
 	}
@@ -34,7 +34,7 @@ public:
 		return *this;
 	}
 
-	Vector3 operator / (double a)
+	Vector3 operator / (double a) const
 	{
 		return Vector3(x / a, y / a, z / a);
 	}
@@ -58,7 +58,7 @@ public:
 		return *this;
 	}
 
-	Vector3 operator + (const Vector3& a)
+	Vector3 operator + (const Vector3& a) const
 	{
 		return Vector3(x + a.x, y + a.y, z + a.z);
 	}
@@ -70,7 +70,7 @@ public:
 		return *this;
 	}
 
-	Vector3 operator - (const Vector3& a)
+	Vector3 operator - (const Vector3& a) const
 	{
 		return Vector3(x - a.x, y - a.y, z - a.z);
 	}
@@ -82,11 +82,11 @@ public:
 		return *this;
 	}
 
-	double dot(Vector3 vec)
+	double dot(Vector3 vec) const
 	{
 		return x*vec.x + y*vec.y + z*vec.z;
 	}
-	double length()
+	double length() const
 	{
 		return std::sqrt(x * x + y * y + z * z);
 	}
@@ -117,7 +117,7 @@ public:
 		Vector3 b = cross(a);
 		return std::make_tuple(a, b);
 	}
-	double distanceSquaredTo(Vector3 vec)
+	double distanceSquaredTo(Vector3 vec) const
 	{
 		return this->operator-(vec).lengthSquared();
 	}

@@ -35,11 +35,10 @@ public:
 	static Builder builder();
 
 protected:
-	// Surface3 implementations
-
+	// Surface overrides
 	Vector3 closestPointLocal(Vector3 otherPoint) const override;
 
-	BoundingBox boundingBoxLocal() const;
+	BoundingBox boundingBoxLocal() const override;
 
 	Vector3 closestNormalLocal(const Vector3& otherPoint) const override;
 };

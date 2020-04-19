@@ -41,6 +41,12 @@ public:
 
 	//! Returns the mid-point of this box.
 	Vector3 midPoint() const;
+
+	void merge(const Vector3& point);
+
+	void merge(const BoundingBox& other);
+
+	Vector3 clamp(const Vector3& pt) const;
 };
 
 #endif

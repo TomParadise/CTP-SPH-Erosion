@@ -73,3 +73,36 @@ Vector3 BoundingBox::midPoint() const
 	Vector3 midPoint = upperCorner;
 	return (midPoint+lowerCorner)/2;
 }
+
+void BoundingBox::merge(const Vector3 & point)
+{
+	lowerCorner.x = std::min(lowerCorner.x, point.x);
+	lowerCorner.y = std::min(lowerCorner.y, point.y);
+	lowerCorner.z = std::min(lowerCorner.z, point.z);
+	upperCorner.x = std::max(upperCorner.x, point.x);
+	upperCorner.y = std::max(upperCorner.y, point.y);
+	upperCorner.z = std::max(upperCorner.z, point.z);
+}
+
+void BoundingBox::merge(const BoundingBox & other)
+{
+	lowerCorner.x = std::min(lowerCorner.x, other.lowerCorner.x);
+	lowerCorner.y = std::min(lowerCorner.y, other.lowerCorner.y);
+	lowerCorner.z = std::min(lowerCorner.z, other.lowerCorner.z);
+	upperCorner.x = std::max(upperCorner.x, other.upperCorner.x);
+	upperCorner.y = std::max(upperCorner.y, other.upperCorner.y);
+	upperCorner.z = std::max(upperCorner.z, other.upperCorner.z);
+}
+
+Vector3 BoundingBox::clamp(const Vector3 & pt) const
+{
+	Vector3 vec;
+	vec.x = std::max(lowerCorner.x, pt.x);
+	vec.y = std::max(lowerCorner.y, pt.y);
+	vec.z = std::max(lowerCorner.z, pt.z);
+	vec.x = std::min(upperCorner.x, pt.x);
+	vec.y = std::min(upperCorner.y, pt.y);
+	vec.z = std::min(upperCorner.z, pt.z);
+	return vec;
+}
+

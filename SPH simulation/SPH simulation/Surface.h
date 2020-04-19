@@ -54,6 +54,9 @@ public:
 	//! Returns the bounding box of this surface object.
 	BoundingBox boundingBox();
 
+	//! Updates internal spatial query engine.
+	virtual void updateQueryEngine();
+
 protected:
 	//! Returns the closest point from the given point \p otherPoint to the
 	//! surface in local frame.
