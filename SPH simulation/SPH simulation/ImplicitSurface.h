@@ -22,6 +22,9 @@ public:
 	//! Returns signed distance from the given point \p otherPoint.
 	double signedDistance(Vector3& otherPoint);
 
+	void depositToNode(Vector3 pos, double amountToDeposit) override;
+	double erodeNode(Vector3 pos, double amountToErode) override;
+	virtual std::vector<Vector3> getVertices() override;
 protected:
 	//! Returns signed distance from the given point \p otherPoint in local
 	//! space.

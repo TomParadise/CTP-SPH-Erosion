@@ -23,7 +23,7 @@ void Collider::resolveCollision(double radius, double restitutionCoefficient, Ve
 		// new position.
 		Vector3 targetNormal = colliderPoint.normal;
 		Vector3 targetPoint = colliderPoint.point+(targetNormal*(radius));
-		Vector3 colliderVelAtTargetPoint = colliderPoint.velocity;
+		Vector3 colliderVelAtTargetPoint = colliderPoint.velocity;		
 
 		// Get new candidate relative velocity from the target point.
 		Vector3 relativeVel = *velocity;
@@ -77,10 +77,10 @@ void Collider::update(double currentTimeInSeconds, double timeIntervalInSeconds)
 {
 	if (_onUpdateCallback) 
 	{
-		_onUpdateCallback(this, currentTimeInSeconds, timeIntervalInSeconds);
+		//_onUpdateCallback(this, currentTimeInSeconds, timeIntervalInSeconds);
 	}
 
-	_surface->updateQueryEngine();
+	//_surface->updateQueryEngine();
 }
 
 void Collider::setOnBeginUpdateCallback(const OnBeginUpdateCallback & callback)

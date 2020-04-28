@@ -155,7 +155,6 @@
     <ClInclude Include="BccLatticePointGenerator.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Box.h" />
-    <ClInclude Include="Bvh.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Heightfield.h" />
@@ -170,7 +169,6 @@
     <ClInclude Include="PointGenerator.h" />
     <ClInclude Include="PointHashGridSearcher.h" />
     <ClInclude Include="PointNeighbourSearcher.h" />
-    <ClInclude Include="PointParallelHashGridSearcher.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RigidBodyCollider.h" />
     <ClInclude Include="SphSpikyKernel.h" />
@@ -181,8 +179,6 @@
     <ClInclude Include="SurfaceToImplicit.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="Triangle.h" />
-    <ClInclude Include="TriangleMesh.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VolumeParticleEmitter.h" />
   </ItemGroup>
@@ -190,7 +186,6 @@
     <ClCompile Include="BccLatticePointGenerator.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Box.cpp" />
-    <ClCompile Include="Bvh.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Heightfield.cpp" />
     <ClCompile Include="ImplicitSurface.cpp" />
@@ -203,7 +198,6 @@
     <ClCompile Include="PointGenerator.cpp" />
     <ClCompile Include="PointHashGridSearcher.cpp" />
     <ClCompile Include="PointNeighbourSearcher.cpp" />
-    <ClCompile Include="PointParallelHashGridSearcher.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RigidBodyCollider.cpp" />
     <ClCompile Include="SphSystemData.cpp" />
@@ -212,8 +206,6 @@
     <ClCompile Include="SurfaceToImplicit.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="Triangle.cpp" />
-    <ClCompile Include="TriangleMesh.cpp" />
     <ClCompile Include="VolumeParticleEmitter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -140,6 +140,21 @@ VolumeParticleEmitter::Builder VolumeParticleEmitter::builder()
 	return Builder();
 }
 
+Vector3 VolumeParticleEmitter::getRandomSpawnPos()
+{
+	Vector3 pos;
+
+	int k = std::floor(random(0,94*(_bounds.upperCorner.z / 95)/_spacing));
+	int j = std::floor(random(0, 8));
+	int i = std::floor(random(0, 94*(_bounds.upperCorner.x / 95)/ _spacing));
+
+	pos.z = k * _spacing + _bounds.upperCorner.z/95;
+	pos.y = _bounds.upperCorner.y - j * _spacing;
+	pos.x = i * _spacing + _bounds.upperCorner.x/95;
+
+	return pos;
+}
+
 void VolumeParticleEmitter::onUpdate(double currentTimeInSeconds, double timeIntervalInSeconds)
 {
 	auto particles = target();
@@ -194,7 +209,7 @@ void VolumeParticleEmitter::emit(const ParticleSystemDataPtr & particles, std::v
 
 	if (_allowOverlapping || _isOneShot)
 	{
-		_pointsGen->forEachPoint(region, _spacing, [&](const Vector3& point) 
+		_pointsGen->forEachPoint(region, _spacing*4, [&](const Vector3& point) 
 		{
 			Vector3 randomDir = uniformSampleSphere(random(), random());
 			Vector3 offset = randomDir*maxJitterDist;
@@ -253,9 +268,9 @@ void VolumeParticleEmitter::emit(const ParticleSystemDataPtr & particles, std::v
 		});
 	}
 
-	std::cout << "Number of newly generated particles: " << numNewParticles << "\n";
-	std::cout << "Number of total generated particles: "
-		<< _numberOfEmittedParticles << "\n";
+	//std::cout << "Number of newly generated particles: " << numNewParticles << "\n";
+	//std::cout << "Number of total generated particles: "
+	//	<< _numberOfEmittedParticles << "\n";
 
 	newVelocities->clear();
 	newVelocities->resize(newPositions->size());
@@ -268,6 +283,12 @@ void VolumeParticleEmitter::emit(const ParticleSystemDataPtr & particles, std::v
 double VolumeParticleEmitter::random()
 {
 	std::uniform_real_distribution<> d(0.0, 1.0);
+	return d(_rng);
+}
+
+double VolumeParticleEmitter::random(double min, double max)
+{
+	std::uniform_real_distribution<> d(min, max);
 	return d(_rng);
 }
 

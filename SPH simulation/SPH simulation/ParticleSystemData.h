@@ -7,7 +7,6 @@
 #include <vector>
 #include "Vector3.h"
 #include "PointHashGridSearcher.h"
-#include "PointParallelHashGridSearcher.h"
 
 class ParticleSystemData
 {
@@ -27,6 +26,9 @@ public:
 	std::vector<Vector3>& forces();
 	void setDensities(std::vector<double> densities);
 	void setPressures(std::vector<double> pressures);
+
+	std::vector<double>& water();
+	std::vector<double>& sediment();
 
 	double mass();
 
@@ -90,6 +92,9 @@ private:
 	std::vector<Vector3> _forces;
 	std::vector<double> _densities;
 	std::vector<double> _pressures;
+
+	std::vector<double> _waterContent;
+	std::vector<double> _sedimentCarried;
 	
 	//! Target density of this particle system in kg/m^3.
 	double _targetDensity = 1000.0;

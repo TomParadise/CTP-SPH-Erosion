@@ -18,6 +18,20 @@ bool Plane::isBounded() const
 	return false;
 }
 
+void Plane::depositToNode(Vector3 pos, double amountToDeposit)
+{
+}
+
+double Plane::erodeNode(Vector3 pos, double amountToErode)
+{
+	return 0.0;
+}
+
+std::vector<Vector3> Plane::getVertices()
+{
+	return std::vector<Vector3>();
+}
+
 Vector3 Plane::closestPointLocal(Vector3 otherPoint) const
 {
 	Vector3 _normal = normal;

@@ -3,6 +3,7 @@
 #define INCLUDE_SURFACE_H_
 
 #include <limits>
+#include <vector>
 #include "Vector3.h"
 #include "Transform.h"
 #include "BoundingBox.h"
@@ -56,6 +57,12 @@ public:
 
 	//! Updates internal spatial query engine.
 	virtual void updateQueryEngine();
+
+	virtual void depositToNode(Vector3 pos, double amountToDeposit) = 0;
+
+	virtual double erodeNode(Vector3 pos, double amountToErode) = 0;
+
+	virtual std::vector<Vector3> getVertices() = 0;
 
 protected:
 	//! Returns the closest point from the given point \p otherPoint to the

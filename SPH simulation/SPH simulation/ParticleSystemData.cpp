@@ -7,7 +7,7 @@ ParticleSystemData::ParticleSystemData() : ParticleSystemData(0){}
 
 ParticleSystemData::ParticleSystemData(size_t numberOfParticles)
 {	
-	_neighbourSearcher = std::make_shared<PointParallelHashGridSearcher>(
+	_neighbourSearcher = std::make_shared<PointHashGridSearcher>(
 		kDefaultHashGridResolution,
 		kDefaultHashGridResolution,
 		kDefaultHashGridResolution,
@@ -24,6 +24,11 @@ void ParticleSystemData::resize(size_t newSize)
 {
 	_numberOfParticles = newSize;
 	_forces.resize(newSize);
+	if (newSize > 0)
+	{
+		_waterContent.resize(newSize, (double)(1 / std::sqrt(_numberOfParticles)));
+	}
+	_sedimentCarried.resize(newSize, 0.0);
 }
 
 size_t ParticleSystemData::numberOfParticles() const
@@ -44,6 +49,16 @@ std::vector<Vector3>& ParticleSystemData::velocities()
 std::vector<Vector3>& ParticleSystemData::forces()
 {
 	return _forces;
+}
+
+std::vector<double>& ParticleSystemData::water()
+{
+	return _waterContent;
+}
+
+std::vector<double>& ParticleSystemData::sediment()
+{
+	return _sedimentCarried;
 }
 
 void ParticleSystemData::setDensities(std::vector<double> densities)
@@ -159,7 +174,7 @@ void ParticleSystemData::set(const ParticleSystemData & other)
 
 void ParticleSystemData::buildNeighbourSearcher(double maxSearchRadius)
 {
-	_neighbourSearcher = std::make_shared<PointParallelHashGridSearcher>(
+	_neighbourSearcher = std::make_shared<PointHashGridSearcher>(
 		kDefaultHashGridResolution,
 		kDefaultHashGridResolution,
 		kDefaultHashGridResolution,

@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 598645767}
   - component: {fileID: 598645766}
   - component: {fileID: 598645765}
+  - component: {fileID: 598645768}
   - component: {fileID: 598645764}
   m_Layer: 0
   m_Name: GameObject
@@ -151,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b780b0b875b02f4db197ecb0bf98eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vertices: []
-  triangles: []
-  width: 25
-  depth: 25
+  width: 100
+  depth: 100
+  frame: 0
+  frameCount: 1000
+  updateMesh: 0
 --- !u!33 &598645765
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -180,7 +182,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f208b6d74743bcf4aac4d897d360b974, type: 2}
+  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,6 +217,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &598645768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598645763}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55dd593c1be2bdf4eb1f65fbee073197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sphere: {fileID: 364152295061492081, guid: 13a7836dab0335d4e837db0dfbb46cd6, type: 3}
+  particleCount: 20000
+  frameCount: 1000
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +334,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -390,18 +406,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55dd593c1be2bdf4eb1f65fbee073197, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sphere: {fileID: 364152295061492081, guid: 13a7836dab0335d4e837db0dfbb46cd6, type: 3}
-  particleCount: 5000
-  frameCount: 250

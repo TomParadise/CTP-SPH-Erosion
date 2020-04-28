@@ -34,6 +34,10 @@ public:
 	//! Returns builder fox Box.
 	static Builder builder();
 
+	void depositToNode(Vector3 pos, double amountToDeposit) override;
+	double erodeNode(Vector3 pos, double amountToErode) override;
+	virtual std::vector<Vector3> getVertices() override;
+
 protected:
 	// Surface overrides
 	Vector3 closestPointLocal(Vector3 otherPoint) const override;

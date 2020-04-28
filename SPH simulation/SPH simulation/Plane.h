@@ -35,6 +35,10 @@ public:
 
 	//! Returns true if bounding box can be defined.
 	bool isBounded() const;
+
+	void depositToNode(Vector3 pos, double amountToDeposit) override;
+	double erodeNode(Vector3 pos, double amountToErode) override;
+	virtual std::vector<Vector3> getVertices() override;
 protected:
 		Vector3 closestPointLocal(Vector3 otherPoint) const override;
 

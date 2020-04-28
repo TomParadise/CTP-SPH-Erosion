@@ -2,7 +2,6 @@
 
 void BccLatticePointGenerator::forEachPoint(const BoundingBox & boundingBox, double spacing, const std::function<bool(const Vector3&)>& callback) const
 {
-	double halfSpacing = spacing / 2.0;
 	double boxWidth = boundingBox.width();
 	double boxHeight = boundingBox.height();
 	double boxDepth = boundingBox.depth();

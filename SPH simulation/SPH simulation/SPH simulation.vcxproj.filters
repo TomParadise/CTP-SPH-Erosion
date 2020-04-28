@@ -102,18 +102,6 @@
     <ClInclude Include="SurfaceToImplicit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointParallelHashGridSearcher.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TriangleMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bvh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Heightfield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -186,18 +174,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SurfaceToImplicit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PointParallelHashGridSearcher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TriangleMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bvh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Heightfield.cpp">

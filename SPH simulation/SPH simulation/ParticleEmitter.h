@@ -51,6 +51,8 @@ public:
 	//!
 	void setOnBeginUpdateCallback(const OnBeginUpdateCallback& callback);
 
+	virtual Vector3 getRandomSpawnPos() = 0;
+
 protected:
 	//! Called when ParticleEmitter3::setTarget is executed.
 	//virtual void onSetTarget(const ParticleSystemDataPtr& particles) = 0;

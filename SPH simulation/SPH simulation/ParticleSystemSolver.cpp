@@ -43,8 +43,8 @@ void ParticleSystemSolver::accumulateExternalForces()
 
 	for (size_t i = 0; i < n; i++)
 	{
-		//gravity
-			_particleSystemData->forces()[i] += (_gravity * mass) +
+		//gravity and drag
+		_particleSystemData->forces()[i] += (_gravity * mass) +
 						(_particleSystemData->velocities()[i] *
 							-_dragCoefficient);
 	}
@@ -99,6 +99,60 @@ void ParticleSystemSolver::beginAdvanceTimeStep(double timeIntervalInSeconds)
 void ParticleSystemSolver::endAdvanceTimeStep(double timeIntervalInSeconds)
 {
 	size_t n = _particleSystemData->numberOfParticles();
+	double nsqrt = std::sqrt(n);
+	for (size_t i = 0; i < n; i++)
+	{
+		if (_newPositions[i].z <= 0)
+		{
+			_newPositions[i].z = 0;
+		}
+		if (_newPositions[i].x <= 0)
+		{
+			_newPositions[i].x = 0;
+		}
+		if (_collider->surface()->closestDistance(_newPositions[i]) <= _particleSystemData->radius() + 0.03)
+		{
+			double deltaHeight = _newPositions[i].y - _particleSystemData->positions()[i].y;
+			double speed = _newVelocities[i].length()/nsqrt*25;
+
+			// Calculate the droplet's sediment capacity 
+			// (higher when moving fast down a slope and contains lots of water)
+			double sedimentCapacity = std::max(-deltaHeight * speed * _particleSystemData->water()[i] * 4, 0.01/nsqrt);
+
+			// If carrying more sediment than capacity, or if flowing uphill:
+			if (_particleSystemData->sediment()[i] > sedimentCapacity || deltaHeight > 0 && _particleSystemData->sediment()[i] > 0)
+			{
+				// If moving uphill (deltaHeight > 0) try fill up to the current height 
+				// otherwise deposit a fraction of the excess sediment
+				double amountToDeposit =
+					((deltaHeight > 0) ? std::min(deltaHeight, _particleSystemData->sediment()[i]) :
+					(_particleSystemData->sediment()[i] - sedimentCapacity)) * 0.3f;
+
+				_particleSystemData->sediment()[i] -= amountToDeposit;
+
+				_collider->surface()->depositToNode(_newPositions[i], amountToDeposit);
+			}
+			else
+			{
+				// Erode a fraction of the droplet's current carry capacity.
+				// Clamp the erosion to the change in height so that it doesn't 
+				// dig a hole in the terrain behind the droplet
+				double amountToErode = std::min((sedimentCapacity - _particleSystemData->sediment()[i]) *
+					0.3f,
+					-deltaHeight);
+
+				_particleSystemData->sediment()[i] += _collider->surface()->erodeNode(_newPositions[i], amountToErode);
+			}
+			_particleSystemData->water()[i] *= (1 - 0.01);
+			if (_particleSystemData->water()[i] <= 0)
+			{
+				_newPositions[i] = _emitter->getRandomSpawnPos();
+				_newVelocities[i] = Vector3();
+				_particleSystemData->water()[i] = 1/ nsqrt;
+				_particleSystemData->sediment()[i] = 0;
+			}
+		}
+	}
 
 	for (size_t i = 0; i < n; i++)
 	{
@@ -163,6 +217,14 @@ void ParticleSystemSolver::resolveCollision(
 
 		for (size_t i = 0; i < numberOfParticles; i++)
 		{
+			if (!_collider->surface()->boundingBox().contains(newPositions[i]) || newPositions[i].z <= 0 || newPositions[i].x <= 0)
+			{
+				newPositions[i] = _emitter->getRandomSpawnPos();
+				newVelocities[i] = Vector3(); 
+				_particleSystemData->water()[i] = 1;
+				_particleSystemData->sediment()[i] = 0;
+
+			}
 			_collider->resolveCollision(
 				radius,
 				_restitutionCoefficient,

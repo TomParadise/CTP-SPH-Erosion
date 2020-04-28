@@ -14,6 +14,20 @@ Box::Builder Box::builder()
 	return Builder();
 }
 
+void Box::depositToNode(Vector3 pos, double amountToDeposit)
+{
+}
+
+double Box::erodeNode(Vector3 pos, double amountToErode)
+{
+	return 0.0;
+}
+
+std::vector<Vector3> Box::getVertices()
+{
+	return std::vector<Vector3>();
+}
+
 Vector3 Box::closestPointLocal(Vector3 otherPoint) const
 {
 	if (bound.contains(otherPoint)) 

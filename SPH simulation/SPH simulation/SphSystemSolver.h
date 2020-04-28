@@ -69,7 +69,7 @@ protected:
 private:
 
 	//! Viscosity coefficient.
-	double _viscosityCoefficient = 0.01;
+	double _viscosityCoefficient = 0.005;
 
 	//! Pseudo-viscosity coefficient velocity filtering.
 	//! This is a minimum "safety-net" for SPH solver which is quite

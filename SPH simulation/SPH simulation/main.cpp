@@ -33,9 +33,13 @@
 #include "Plane.h"
 #include "VolumeParticleEmitter.h"
 #include "RigidBodyCollider.h"
-#include "TriangleMesh.h"
 #include "Heightfield.h"
 
+double x_size = 100;
+double z_size = 100;
+bool saveAllFrames = true;
+
+double maxHeight;
 void generateInitialVertices(std::vector<Vector3>* vertArray, int width, int depth)
 {
 	Vector3* vertices = new Vector3[(width) * (depth)];
@@ -106,6 +110,10 @@ void perlinNoise(int width, int height, int octaves, float Bias, std::vector<Vec
 				for (int j = 0; j < o; j++)
 				{
 					pitch = (int)(pitch / 2);
+					if (pitch == 0)
+					{
+						pitch = 1;
+					}
 				}
 
 				int sample_x_1 = (x / pitch)*pitch;
@@ -124,7 +132,7 @@ void perlinNoise(int width, int height, int octaves, float Bias, std::vector<Vec
 				scale_acc += scale;
 				scale = scale / Bias;
 			}
-			vertices[z * (width) + x].y = (noise / scale_acc) * (width*0.5);
+			vertices[z * (width) + x].y = (noise / scale_acc) * 3*height/4;
 		}
 	}
 	for (int i = 0; i < (width) * (height); ++i)
@@ -132,6 +140,10 @@ void perlinNoise(int width, int height, int octaves, float Bias, std::vector<Vec
 		//Simply modify each Vector reference
 		Vector3 &newVal = vertArray->at(i);
 		newVal.y = vertices[i].y;
+		if (newVal.y > maxHeight)
+		{
+			maxHeight = newVal.y;
+		}
 	}
 }
 
@@ -139,51 +151,62 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 {	
 	auto particles = solver->sphSystemData();
 
-	for (Frame frame(0, 1.0 / fps); frame.index < numberOfFrames; ++frame) 
+	for (Frame frame(0, 1.0 / fps); frame.index < numberOfFrames; ++frame)
 	{
 		solver->Update(frame);
-			   
-		std::vector<Vector3> positions(particles->numberOfParticles());
 
-		for (size_t i = 0; i < particles->numberOfParticles(); i++)
+		std::vector<Vector3> positions = particles->positions();
+
+		std::cout << frame.index << '\n';
+		if (saveAllFrames || frame.index == numberOfFrames-1)
 		{
-			if (positions.size() < i)
+			std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
+			std::ofstream file;
+			file.open(filename);
+			if (file)
 			{
-				positions.push_back(particles->positions().at(i));
+				printf("Writing %s...\n", filename.c_str());
+
+				for (size_t i = 0; i < positions.size(); i++)
+				{
+					std::string buffer = std::to_string(positions[i].x - x_size / 2) + "," + std::to_string(positions[i].y - maxHeight / 2) + "," + std::to_string(positions[i].z - z_size / 2) + ",";
+					file << buffer;
+				}
+				file.close();
 			}
-			else
+			std::vector<Vector3> vertices = solver->collider()->surface()->getVertices();
+
+			filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/Mesh" + std::to_string(frame.index) + ".txt";
+			file.open(filename);
+			if (file)
 			{
-				positions[i] = particles->positions()[i];
+				printf("Writing %s...\n", filename.c_str());
+				for (size_t i = 0; i < vertices.size(); i++)
+				{
+					std::string buffer = std::to_string(vertices[i].x - x_size / 2) + "," + std::to_string(vertices[i].y - maxHeight / 2) + "," + std::to_string(vertices[i].z - z_size / 2) + ",";
+					file << buffer;
+				}
+				file.close();
 			}
 		}
-
-		char basename[256];
-		snprintf(basename, sizeof(basename), "frame_%06d.pos", frame.index);
-		std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
-		std::ofstream file;
-		file.open(filename);
-		if (file) 
-		{
-			printf("Writing %s...\n", filename.c_str());
-
-			for (size_t i = 0; i < positions.size(); i++)
-			{
-				std::string buffer = std::to_string(positions[i].x) + "," + std::to_string(positions[i].y) + "," + std::to_string(positions[i].z) + ",";
-				file << buffer;
-			}
-			file.close();
-		}
-	}
+	}	
 }
 
 void damBreakSim(double targetSpacing,
 	int numberOfFrames, double fps)
 {
-	float x_size = 100;
-	float z_size = 100;
-	BoundingBox domain(Vector3(0,0,0), Vector3(1.5, 2, 1.5));
-	double lz = domain.depth();
+	//BoundingBox domain(Vector3(0,0,0), Vector3(1.5, 2, 1.5));
+	//double lz = domain.depth();
 
+	size_t numberOfParticles;
+	if (x_size*z_size >= 250000 && saveAllFrames)
+	{
+		numberOfParticles = 500000;
+	}
+	else
+	{
+		numberOfParticles = x_size * z_size * 2;
+	}
 	// Build solver
 	auto solver = PciSphSystemSolver::Builder()
 		.withTargetDensity(1000)
@@ -194,42 +217,10 @@ void damBreakSim(double targetSpacing,
 	solver->setTimeStepLimitScale(10.0);
 
 	// Build emitter
-	BoundingBox sourceBound(domain);
-	sourceBound.expand(-targetSpacing);
+	//BoundingBox sourceBound(domain);
+	//sourceBound.expand(-targetSpacing);
 
-	auto box1 =
-		Box::builder()
-		.withLowerCorner({ x_size/2-10, (z_size)*0.5, z_size/2 -10  })
-		.withUpperCorner({ x_size / 2+10, (z_size)*0.5, z_size / 2 +10  })
-		.makeShared();
 
-	//auto box2 =
-	//	Box3::builder()
-	//	.withLowerCorner({ 2.5 - 0.001, 0, 0.25 * lz - 0.001 })
-	//	.withUpperCorner({ 3.5 + 0.001, 0.75 + 0.001, 1.5 * lz + 0.001 })
-	//	.makeShared();
-
-	auto emitter = VolumeParticleEmitter::builder()
-		.withSurface(box1)
-		.withMaxRegion(box1->boundingBox())
-		.withSpacing(targetSpacing)
-		.withMaxNumberOfParticles(5000)
-		.makeShared();
-
-	solver->setEmitter(emitter);
-
-	// Build collider
-	//auto box = Box::builder()
-	//	.withIsNormalFlipped(true)
-	//	.withBoundingBox(domain)
-	//	.makeShared();
-
-	//auto collider =
-	//	RigidBodyCollider::builder()
-	//	.withSurface(box)
-	//	.makeShared();
-
-	//solver->setCollider(collider);
 
 	std::vector<Vector3> vertices((x_size)*(z_size));
 	std::vector<Vector3> tris((x_size - 1) * (z_size - 1) * 2);
@@ -252,15 +243,32 @@ void damBreakSim(double targetSpacing,
 
 	perlinNoise(x_size, z_size, 5, 1.6f, &vertices, f_noise_seed);
 
-	/*auto triMesh = TriangleMesh::builder()
-		.withPoints(vertices)
-		.withPointIndices(tris)
-		.makeShared();*/
+	auto box1 =
+		Box::builder()
+		.withLowerCorner({ 5 * x_size / 100, std::ceil(maxHeight), 5 * z_size / 100 })
+		.withUpperCorner({ 95 * x_size / 100, std::ceil(maxHeight)+targetSpacing*8, 95 * z_size / 100 })
+		.makeShared();
+	auto box = box1->boundingBox();
+	auto emitter = VolumeParticleEmitter::builder()
+		.withSurface(box1)
+		.withMaxRegion(box1->boundingBox())
+		.withSpacing(targetSpacing)
+		.withMaxNumberOfParticles(numberOfParticles)
+		.makeShared();
+
+	solver->setEmitter(emitter);
+
+	auto maxRegion =
+		Box::builder()
+		.withLowerCorner({ 0, 0, 0 })
+		.withUpperCorner({x_size-1, std::ceil(maxHeight) + targetSpacing * 8, z_size-1})
+		.makeShared();
 
 	auto heightfield =
 		Heightfield::builder()
 		.withPoints(vertices)
 		.withResolution(x_size, z_size)
+		.withBox(maxRegion->boundingBox())
 		.makeShared();
 
 	auto collider =
@@ -270,7 +278,7 @@ void damBreakSim(double targetSpacing,
 
 	solver->setCollider(collider);
 
-	char basename[256];
+
 	std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/Mesh.txt";
 	std::ofstream file;
 	file.open(filename);
@@ -298,5 +306,5 @@ void damBreakSim(double targetSpacing,
 
 int main()
 {
-	damBreakSim(0.1, 250, 60);
+	damBreakSim(0.25, 1000, 60);
 }

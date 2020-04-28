@@ -13,6 +13,7 @@ public class SPHSimulation : MonoBehaviour
     [SerializeField] private int particleCount;
     private float timer = 0.0f;
     [SerializeField] private int frameCount;
+    float fps = 1 / 15;
 
 
     // Start is called before the first frame update
@@ -23,6 +24,16 @@ public class SPHSimulation : MonoBehaviour
         {
             particles[i] = Instantiate(sphere);
         }
+
+        File = new StreamReader("Assets/Positions/DamBreak" + frame.ToString() + ".txt");
+        text = File.ReadToEnd();
+        string[] xyz = text.Split(',');
+        for (long i = 0; i < particles.Length; i++)
+        {
+            particles[i].transform.position = new Vector3(float.Parse(xyz[i * 3]), float.Parse(xyz[i * 3 + 1]), float.Parse(xyz[i * 3 + 2]));
+        }
+        frame++;
+
     }
 
     // Update is called once per frame
@@ -31,7 +42,7 @@ public class SPHSimulation : MonoBehaviour
         if (frame < frameCount)
         {
             timer += Time.deltaTime;
-            if (timer >= 0.040f)
+            if (timer >= fps)
             {
                 File = new StreamReader("Assets/Positions/DamBreak" + frame.ToString() + ".txt");
                 text = File.ReadToEnd();

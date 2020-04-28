@@ -1,37 +1,22 @@
 #include "Heightfield.h"
 
-Heightfield::Heightfield(std::vector<Vector3> points, bool isNormalFlipped, size_t resolutionX, size_t resolutionZ)
+Heightfield::Heightfield(std::vector<Vector3> points, bool isNormalFlipped, size_t resolutionX, size_t resolutionZ, BoundingBox maxRegion)
 {
 	_points = points;
 	_isNormalFlipped = isNormalFlipped;
 	_resolution_x = resolutionX;
 	_resolution_z = resolutionZ;
+	_maxRegion = maxRegion;
 }
 
 Vector3 Heightfield::closestPointLocal(Vector3 otherPoint) const
 {
-	if (otherPoint.z < 0)
-	{
-		otherPoint.z = 0;
-	}
-	else if (otherPoint.z > _resolution_z-1)
-	{
-		otherPoint.z = _resolution_z-1;
-	}
-	if (otherPoint.x < 0)
-	{
-		otherPoint.x = 0;
-	}
-	else if (otherPoint.x > _resolution_x-1)
-	{
-		otherPoint.x = _resolution_x-1;
-	}
-	Vector3 vertex1 = _points[std::floor(otherPoint.z)*_resolution_x + std::floor(otherPoint.x)] + Vector3(0.5,0,0.5);
+	Vector3 vertex1 = _points[std::floor(otherPoint.z)*_resolution_x + std::floor(otherPoint.x)] + Vector3(1,0,0);
 	Vector3 vertex2;
 	Vector3 vertex3;
 	
-	float _relativeXPos = otherPoint.x - vertex1.x;
-	float _relativeZPos = otherPoint.z - vertex1.z;
+	double _relativeXPos = vertex1.x - otherPoint.x;
+	double _relativeZPos = otherPoint.z - vertex1.z;
 
 	if (_relativeXPos >= _relativeZPos)
 	{
@@ -46,15 +31,13 @@ Vector3 Heightfield::closestPointLocal(Vector3 otherPoint) const
 		vertex3 = _points[(std::floor(otherPoint.z) + 1)*_resolution_x + std::floor(otherPoint.x) + 1];
 	}
 
-	float lambda1 = ((vertex2.z - vertex3.z)*(otherPoint.x - vertex3.x) + (vertex3.x - vertex2.x)*(otherPoint.z - vertex3.z)) / 
-					((vertex2.z-vertex3.z)*(vertex1.x-vertex3.x) + (vertex3.x-vertex2.x)*(vertex1.z-vertex3.z));
-	float lambda2 = ((vertex3.z - vertex1.z)*(otherPoint.x - vertex3.x) + (vertex1.x - vertex3.x)*(otherPoint.z - vertex3.z)) /
-					((vertex2.z - vertex3.z)*(vertex1.x - vertex3.x) + (vertex3.x - vertex2.x)*(vertex1.z - vertex3.z));
-	float lambda3 = 1 - lambda1 - lambda2;
+	Vector3 normal = closestNormalLocal(otherPoint);
 
-	float height = lambda1 * vertex1.y + lambda2 * vertex2.y + lambda3 * vertex3.y;
+	double t = ((vertex1 - otherPoint).dot(normal))/((normal*-1).dot(normal));
 
-	return Vector3(otherPoint.x, height, otherPoint.z);
+	Vector3 point = otherPoint + (normal*-1) * t;
+
+	return point;
 }
 
 double Heightfield::closestDistanceLocal(Vector3 otherPoint)
@@ -64,33 +47,26 @@ double Heightfield::closestDistanceLocal(Vector3 otherPoint)
 
 BoundingBox Heightfield::boundingBoxLocal() const
 {
-	return BoundingBox();
+	return _maxRegion;
 }
 
 Vector3 Heightfield::closestNormalLocal(const Vector3 & otherPoint) const
 {
 	Vector3 point = otherPoint;
-	if (otherPoint.z < 0)
+	if (point.x > _resolution_x - 1)
 	{
-		point.z = 0;
+		point.x = _resolution_x;
 	}
-	else if (otherPoint.z > _resolution_z-1)
+	if (point.z > _resolution_z - 1)
 	{
-		point.z = _resolution_z-1;
+		point.z = _resolution_z;
 	}
-	if (otherPoint.x < 0)
-	{
-		point.x = 0;
-	}
-	else if (otherPoint.x > _resolution_x-1)
-	{
-		point.x = _resolution_x-1;
-	}
-	Vector3 vertex1 = _points[std::floor(point.z)*_resolution_x + std::floor(point.x)] + Vector3(0.5, 0, 0.5);
+	Vector3 vertex1 = _points[std::floor(point.z)*_resolution_x + std::floor(point.x)];
+	vertex1.x += 1;
 	Vector3 vertex2;
 	Vector3 vertex3;
-	float _relativeXPos = point.x - vertex1.x;
-	float _relativeZPos = point.z - vertex1.z;
+	double _relativeXPos = vertex1.x - point.x;
+	double _relativeZPos = point.z - vertex1.z;
 
 	if (_relativeXPos >= _relativeZPos)
 	{
@@ -105,10 +81,10 @@ Vector3 Heightfield::closestNormalLocal(const Vector3 & otherPoint) const
 		vertex3 = _points[(std::floor(point.z) + 1)*_resolution_x + std::floor(point.x) + 1];
 	}
 
-	Vector3 edge1 = vertex2 - vertex1;
-	Vector3 edge2 = vertex3 - vertex1;
-	Vector3 norm = edge1.cross(edge2);
-	return edge1.cross(edge2);
+	Vector3 edge1 = vertex1 - vertex2;
+	Vector3 edge2 = vertex1 - vertex3;
+
+	return edge1.cross(edge2).normalized();
 
 }
 
@@ -120,6 +96,140 @@ bool Heightfield::isInsideLocal(Vector3 otherPoint)
 Heightfield::Builder Heightfield::builder()
 {
 	return Builder();
+}
+
+void Heightfield::depositToNode(Vector3 pos, double amountToDeposit)
+{
+	// Add the sediment to the four vertices of the current node 
+	// using bilinear interpolation
+	// Deposition is not distributed over a radius (like erosion) 
+	// so that it can fill small pits
+	Vector3& vertex1 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x)];
+	Vector3& vertex2 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x)+1];
+	Vector3& vertex3 = _points[(std::floor(pos.z)+1)*_resolution_x + std::floor(pos.x)];
+	Vector3& vertex4 = _points[(std::floor(pos.z) + 1)*_resolution_x + std::floor(pos.x)+1];
+
+	vertex1.y += amountToDeposit * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+	vertex2.y += amountToDeposit * ((pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+	vertex3.y += amountToDeposit * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+	vertex4.y += amountToDeposit * ((pos.x - vertex1.x)) * (pos.z - vertex1.z);
+}
+
+double Heightfield::erodeNode(Vector3 pos, double amountToErode)
+{
+	double erosionRadius = 1.5;
+	int nodeindex = std::floor(pos.z)*_resolution_x + std::floor(pos.x);
+	double sediment = 0;
+
+	Vector3& vertex1 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x)];
+	Vector3& vertex2 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x) + 1];
+	Vector3& vertex3 = _points[(std::floor(pos.z) + 1)*_resolution_x + std::floor(pos.x)];
+	Vector3& vertex4 = _points[(std::floor(pos.z) + 1)*_resolution_x + std::floor(pos.x) + 1];
+
+	double _relativeXPos = pos.x - vertex1.x;
+	double _relativeZPos = pos.z - vertex1.z;
+	if (pos.distanceTo(vertex1) <= erosionRadius)
+	{
+		vertex1.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+		sediment += amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+	}
+	if (pos.distanceTo(vertex2) <= erosionRadius)
+	{
+		vertex2.y -= amountToErode * (pos.x - vertex1.x) * (1 - (pos.z - vertex1.z));
+		sediment += amountToErode * (pos.x - vertex1.x) * (1 - (pos.z - vertex1.z));
+	}
+	if (pos.distanceTo(vertex3) <= erosionRadius)
+	{
+		vertex3.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+		sediment += amountToErode * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+	}
+	if (pos.distanceTo(vertex4) <= erosionRadius)
+	{
+		vertex4.y -= amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
+		sediment += amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
+	}
+
+	if (pos.x > 1)
+	{
+		Vector3& vertex5 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x) - 1];
+		if (pos.distanceTo(vertex5) <= erosionRadius)
+		{
+			vertex5.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+			sediment += amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+		}
+		if (pos.z < _resolution_z - 2)
+		{
+			Vector3& vertex6 = _points[(std::floor(pos.z) + 1)*_resolution_x + std::floor(pos.x) - 1];
+			if (pos.distanceTo(vertex6) <= erosionRadius)
+			{
+				vertex6.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+				sediment += amountToErode * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+			}
+		}
+	}
+
+	if (pos.z < _resolution_z - 3)
+	{
+		Vector3& vertex7 = _points[(std::floor(pos.z) + 2)*_resolution_x + std::floor(pos.x)];
+		if (pos.distanceTo(vertex7) <= erosionRadius)
+		{
+			vertex7.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+			sediment += amountToErode * (1 - (pos.x - vertex1.x)) * (pos.z - vertex1.z);
+		}
+		if (pos.x < _resolution_x - 2)
+		{
+			Vector3& vertex8 = _points[(std::floor(pos.z) + 2)*_resolution_x + std::floor(pos.x) + 1];
+			if (pos.distanceTo(vertex8) <= erosionRadius)
+			{
+				vertex8.y -= amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
+				sediment += amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
+			}
+		}
+	}
+
+	if (pos.x < _resolution_x - 3)
+	{
+		Vector3& vertex9 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x) + 2];
+		if (pos.distanceTo(vertex9) <= erosionRadius)
+		{
+			vertex9.y -= amountToErode * (pos.x - vertex1.x) * (1 - (pos.z - vertex1.z));
+			sediment += amountToErode * (pos.x - vertex1.x) * (1 - (pos.z - vertex1.z));
+		}
+		if (pos.z < _resolution_z - 2)
+		{
+			Vector3& vertex10 = _points[(std::floor(pos.z) + 1)*_resolution_x + std::floor(pos.x) + 2];
+			if (pos.distanceTo(vertex10) <= erosionRadius)
+			{
+				vertex10.y -= amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
+				sediment += amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
+			}
+		}
+	}
+
+	if (pos.z > 1)
+	{
+		Vector3& vertex11 = _points[(std::floor(pos.z) - 1)*_resolution_x + std::floor(pos.x)];
+		if (pos.distanceTo(vertex11) <= erosionRadius)
+		{
+			vertex11.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+			sediment += amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
+		}
+		if (pos.x < _resolution_x - 2)
+		{
+			Vector3& vertex12 = _points[(std::floor(pos.z) - 1)*_resolution_x + std::floor(pos.x) + 1];
+			if (pos.distanceTo(vertex12) <= erosionRadius)
+			{
+				vertex12.y -= amountToErode * (pos.x - vertex1.x) * (1 - (pos.z - vertex1.z));
+				sediment += amountToErode * (pos.x - vertex1.x) * (1 - (pos.z - vertex1.z));
+			}
+		}
+	}
+	return sediment;
+}
+
+std::vector<Vector3> Heightfield::getVertices()
+{
+	return _points;
 }
 
 Heightfield::Builder & Heightfield::Builder::withIsNormalFlipped(bool isNormalFlipped)
@@ -143,12 +253,18 @@ Heightfield::Builder & Heightfield::Builder::withResolution(size_t resolutionX, 
 
 Heightfield Heightfield::Builder::build() const
 {
-	return Heightfield(_points, _isNormalFlipped, _resolution_x, _resolution_z);
+	return Heightfield(_points, _isNormalFlipped, _resolution_x, _resolution_z, _maxRegion);
 }
 
 HeightfieldPtr Heightfield::Builder::makeShared() const
 {
 	return std::shared_ptr<Heightfield>(
-		new Heightfield(_points, _isNormalFlipped, _resolution_x, _resolution_z),
+		new Heightfield(_points, _isNormalFlipped, _resolution_x, _resolution_z, _maxRegion),
 		[](Heightfield* obj) { delete obj; });
+}
+
+Heightfield::Builder & Heightfield::Builder::withBox(BoundingBox maxRegion)
+{
+	_maxRegion = maxRegion;
+	return *this;
 }

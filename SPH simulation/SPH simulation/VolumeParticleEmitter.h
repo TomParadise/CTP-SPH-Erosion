@@ -128,6 +128,8 @@ public:
 	//! Returns builder fox VolumeParticleEmitter3.
 	static Builder builder();
 
+	Vector3 getRandomSpawnPos();
+
 private:
 	std::mt19937 _rng;
 
@@ -162,6 +164,8 @@ private:
 		std::vector<Vector3>* newVelocities);
 
 	double random();
+
+	double random(double min, double max);
 
 	Vector3 velocityAt(Vector3& point);
 
