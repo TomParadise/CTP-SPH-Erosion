@@ -51,6 +51,11 @@ std::vector<Vector3>& ParticleSystemData::forces()
 	return _forces;
 }
 
+std::vector<double>& ParticleSystemData::pressures()
+{
+	return _pressures;
+}
+
 std::vector<double>& ParticleSystemData::water()
 {
 	return _waterContent;

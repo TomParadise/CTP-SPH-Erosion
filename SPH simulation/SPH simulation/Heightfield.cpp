@@ -117,7 +117,7 @@ void Heightfield::depositToNode(Vector3 pos, double amountToDeposit)
 
 double Heightfield::erodeNode(Vector3 pos, double amountToErode)
 {
-	double erosionRadius = 1.5;
+	double erosionRadius = 2.0;
 	int nodeindex = std::floor(pos.z)*_resolution_x + std::floor(pos.x);
 	double sediment = 0;
 
@@ -128,6 +128,7 @@ double Heightfield::erodeNode(Vector3 pos, double amountToErode)
 
 	double _relativeXPos = pos.x - vertex1.x;
 	double _relativeZPos = pos.z - vertex1.z;
+	//the node the particle is in
 	if (pos.distanceTo(vertex1) <= erosionRadius)
 	{
 		vertex1.y -= amountToErode * (1 - (pos.x - vertex1.x)) * (1 - (pos.z - vertex1.z));
@@ -148,7 +149,7 @@ double Heightfield::erodeNode(Vector3 pos, double amountToErode)
 		vertex4.y -= amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
 		sediment += amountToErode * (pos.x - vertex1.x) * (pos.z - vertex1.z);
 	}
-
+	//the node to the west, if there is one
 	if (pos.x > 1)
 	{
 		Vector3& vertex5 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x) - 1];
@@ -167,7 +168,7 @@ double Heightfield::erodeNode(Vector3 pos, double amountToErode)
 			}
 		}
 	}
-
+	//the node to the north, if there is one
 	if (pos.z < _resolution_z - 3)
 	{
 		Vector3& vertex7 = _points[(std::floor(pos.z) + 2)*_resolution_x + std::floor(pos.x)];
@@ -186,7 +187,7 @@ double Heightfield::erodeNode(Vector3 pos, double amountToErode)
 			}
 		}
 	}
-
+	//the node to the east, if there is one
 	if (pos.x < _resolution_x - 3)
 	{
 		Vector3& vertex9 = _points[std::floor(pos.z)*_resolution_x + std::floor(pos.x) + 2];
@@ -205,7 +206,7 @@ double Heightfield::erodeNode(Vector3 pos, double amountToErode)
 			}
 		}
 	}
-
+	//the node to the south, if there is one
 	if (pos.z > 1)
 	{
 		Vector3& vertex11 = _points[(std::floor(pos.z) - 1)*_resolution_x + std::floor(pos.x)];

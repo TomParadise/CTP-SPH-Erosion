@@ -35,8 +35,8 @@
 #include "RigidBodyCollider.h"
 #include "Heightfield.h"
 
-double x_size = 100;
-double z_size = 100;
+double x_size = 200;
+double z_size = 200;
 bool saveAllFrames = true;
 
 double maxHeight;
@@ -157,7 +157,6 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 
 		std::vector<Vector3> positions = particles->positions();
 
-		std::cout << frame.index << '\n';
 		if (saveAllFrames || frame.index == numberOfFrames-1)
 		{
 			std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
@@ -189,6 +188,10 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 				file.close();
 			}
 		}
+		else
+		{
+			std::cout << frame.index << '\n';
+		}
 	}	
 }
 
@@ -198,15 +201,7 @@ void damBreakSim(double targetSpacing,
 	//BoundingBox domain(Vector3(0,0,0), Vector3(1.5, 2, 1.5));
 	//double lz = domain.depth();
 
-	size_t numberOfParticles;
-	if (x_size*z_size >= 250000 && saveAllFrames)
-	{
-		numberOfParticles = 500000;
-	}
-	else
-	{
-		numberOfParticles = x_size * z_size * 2;
-	}
+	size_t numberOfParticles = x_size * z_size * 2;
 	// Build solver
 	auto solver = PciSphSystemSolver::Builder()
 		.withTargetDensity(1000)

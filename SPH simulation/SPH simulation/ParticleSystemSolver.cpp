@@ -98,6 +98,7 @@ void ParticleSystemSolver::beginAdvanceTimeStep(double timeIntervalInSeconds)
 
 void ParticleSystemSolver::endAdvanceTimeStep(double timeIntervalInSeconds)
 {
+	onEndAdvanceTimeStep(timeIntervalInSeconds);
 	size_t n = _particleSystemData->numberOfParticles();
 	double nsqrt = std::sqrt(n);
 	for (size_t i = 0; i < n; i++)
@@ -117,7 +118,7 @@ void ParticleSystemSolver::endAdvanceTimeStep(double timeIntervalInSeconds)
 
 			// Calculate the droplet's sediment capacity 
 			// (higher when moving fast down a slope and contains lots of water)
-			double sedimentCapacity = std::max(-deltaHeight * speed * _particleSystemData->water()[i] * 4, 0.01/nsqrt);
+			double sedimentCapacity = std::max(-deltaHeight * speed * _particleSystemData->water()[i] * 4, 0.01 / nsqrt) * _particleSystemData->scalarDataAt(0)[i] / 850;
 
 			// If carrying more sediment than capacity, or if flowing uphill:
 			if (_particleSystemData->sediment()[i] > sedimentCapacity || deltaHeight > 0 && _particleSystemData->sediment()[i] > 0)
@@ -143,12 +144,12 @@ void ParticleSystemSolver::endAdvanceTimeStep(double timeIntervalInSeconds)
 
 				_particleSystemData->sediment()[i] += _collider->surface()->erodeNode(_newPositions[i], amountToErode);
 			}
-			_particleSystemData->water()[i] *= (1 - 0.01);
+			_particleSystemData->water()[i] *= (1 - 0.05);
 			if (_particleSystemData->water()[i] <= 0)
 			{
 				_newPositions[i] = _emitter->getRandomSpawnPos();
 				_newVelocities[i] = Vector3();
-				_particleSystemData->water()[i] = 1/ nsqrt;
+				_particleSystemData->water()[i] = 1 / nsqrt;
 				_particleSystemData->sediment()[i] = 0;
 			}
 		}
@@ -159,7 +160,6 @@ void ParticleSystemSolver::endAdvanceTimeStep(double timeIntervalInSeconds)
 		_particleSystemData->positions()[i] = _newPositions[i];
 		_particleSystemData->velocities()[i] = _newVelocities[i];
 	}
-	onEndAdvanceTimeStep(timeIntervalInSeconds);
 }
 
 void ParticleSystemSolver::onBeginAdvanceTimeStep(double timeStepInSeconds)
@@ -217,6 +217,7 @@ void ParticleSystemSolver::resolveCollision(
 
 		for (size_t i = 0; i < numberOfParticles; i++)
 		{
+			//respawn if not inside the bounds of the heightmap
 			if (!_collider->surface()->boundingBox().contains(newPositions[i]) || newPositions[i].z <= 0 || newPositions[i].x <= 0)
 			{
 				newPositions[i] = _emitter->getRandomSpawnPos();

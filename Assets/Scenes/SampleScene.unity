@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 598645768}
   - component: {fileID: 598645764}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SPH Erosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphere: {fileID: 364152295061492081, guid: 13a7836dab0335d4e837db0dfbb46cd6, type: 3}
-  particleCount: 20000
+  particleCount: 80000
   frameCount: 1000
 --- !u!1 &705507993
 GameObject:

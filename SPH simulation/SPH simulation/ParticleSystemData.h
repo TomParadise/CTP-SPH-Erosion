@@ -24,6 +24,7 @@ public:
 	std::vector<Vector3>& positions();
 	std::vector<Vector3>& velocities();
 	std::vector<Vector3>& forces();
+	std::vector<double>& pressures();
 	void setDensities(std::vector<double> densities);
 	void setPressures(std::vector<double> pressures);
 
