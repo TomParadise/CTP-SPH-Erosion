@@ -35,8 +35,8 @@
 #include "RigidBodyCollider.h"
 #include "Heightfield.h"
 
-double x_size = 200;
-double z_size = 200;
+double x_size = 100;
+double z_size = 100;
 bool saveAllFrames = true;
 
 double maxHeight;
@@ -159,7 +159,7 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 
 		if (saveAllFrames || frame.index == numberOfFrames-1)
 		{
-			std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
+			std::string filename = "..//..//Assets/Positions/DamBreak" + std::to_string(frame.index) + ".txt";
 			std::ofstream file;
 			file.open(filename);
 			if (file)
@@ -175,7 +175,7 @@ void runSimulation(const PciSphSystemSolverPtr& solver, int numberOfFrames, doub
 			}
 			std::vector<Vector3> vertices = solver->collider()->surface()->getVertices();
 
-			filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/Mesh" + std::to_string(frame.index) + ".txt";
+			filename = "..//..//Assets/Positions/Mesh" + std::to_string(frame.index) + ".txt";
 			file.open(filename);
 			if (file)
 			{
@@ -274,7 +274,7 @@ void damBreakSim(double targetSpacing,
 	solver->setCollider(collider);
 
 
-	std::string filename = "E:/YEAR 3 Uni work/CTP-SPH-Erosion/Assets/Positions/Mesh.txt";
+	std::string filename = "..//..//Assets/Positions/Mesh.txt";
 	std::ofstream file;
 	file.open(filename);
 	if (file)

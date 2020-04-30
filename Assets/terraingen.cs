@@ -5,6 +5,7 @@ using System.IO;
 
 public class terraingen : MonoBehaviour
 {
+    [SerializeField] private bool simulateParticles;
     //public int width;
     //public int depth;
     private Mesh mesh;
@@ -25,6 +26,12 @@ public class terraingen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<SPHSimulation>().particleCount = width * depth * 2;
+        GetComponent<SPHSimulation>().frameCount = frameCount;
+        if (simulateParticles)
+        {
+            GetComponent<SPHSimulation>().enabled = true;
+        }
         resetMesh();
 
         Camera cam = Camera.main;

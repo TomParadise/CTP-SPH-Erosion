@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b780b0b875b02f4db197ecb0bf98eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simulateParticles: 1
   width: 100
   depth: 100
   frame: 0
@@ -230,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphere: {fileID: 364152295061492081, guid: 13a7836dab0335d4e837db0dfbb46cd6, type: 3}
-  particleCount: 80000
+  particleCount: 0
   frameCount: 1000
 --- !u!1 &705507993
 GameObject:

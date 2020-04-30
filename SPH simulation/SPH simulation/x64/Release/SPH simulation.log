@@ -1,4 +1,4 @@
-﻿  ParticleSystemSolver.cpp
+﻿  main.cpp
 e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(70): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(81): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
@@ -7,6 +7,15 @@ e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(95
 e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(96): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(103): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\quaternion.h(111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(204): warning C4244: 'initializing': conversion from 'double' to 'size_t', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(220): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(221): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(223): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(224): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(226): warning C4244: 'initializing': conversion from 'double' to 'size_t', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(236): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(239): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\year 3 uni work\ctp-sph-erosion\sph simulation\sph simulation\main.cpp(265): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
   Generating code
   1 of 1722 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
